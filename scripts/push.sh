@@ -1,0 +1,1 @@
+python -m hdm --greedy_action --use_dqn --lr_actor 5.e-4 --random_act_prob 0.2 --backup_temp 1.0 --double_dqn --future_p 0.85 --relabeled_reward_only --next_state_p 0.6 --seed 890 --env_name pusher --hdm_weights_to_indicator --targ_clip --hdm_online_o2 --hdm_q_coef 1.0 --hdm_gamma 0.5 --hdm_bc

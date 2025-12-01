@@ -1,0 +1,103 @@
+# HDM Environment Setup (Verified for hdm2 environment)
+# This file contains VERIFIED versions from the working hdm2 conda environment
+# Last verified: December 1, 2025
+
+name: hdm2
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  # Python version - VERIFIED
+  - python=3.10.19
+  
+  # Core dependencies installed via conda (if available)
+  - pip
+  
+  # Install Python packages via pip
+  - pip:
+      # Deep Learning Framework - VERIFIED
+      - torch==2.9.1
+      
+      # Core numerical computing - VERIFIED
+      - numpy==2.2.6
+      - scipy==1.15.3
+      
+      # Reinforcement Learning Environments - VERIFIED
+      - gym==0.26.2
+      - gymnasium==1.2.2
+      - gymnasium-robotics==1.4.1
+      - metaworld==3.0.0
+      
+      # MuJoCo Physics Engine - VERIFIED
+      # Note: MuJoCo 3.2.0+ is REQUIRED for Shadow Hand environments
+      # Using older versions will cause 'apirate' attribute errors
+      - mujoco==3.2.0
+      
+      # Additional RL environments - VERIFIED
+      - box2d-py==2.3.8
+      - pettingzoo==1.25.0
+      
+      # Utilities - VERIFIED  
+      - pillow==12.0.0
+      - imageio==2.37.2
+      - cloudpickle==3.1.2
+      - filelock==3.20.0
+      - packaging==25.0
+      
+      # Rendering dependencies - VERIFIED
+      - PyOpenGL==3.1.10
+      - glfw==2.10.0
+      
+      # Other dependencies - VERIFIED
+      - jinja2==3.1.6
+      - networkx==3.4.2
+      - sympy==1.14.0
+      - absl-py==2.3.1
+      - fsspec==2025.10.0
+      
+      # Farama ecosystem - VERIFIED
+      - Farama-Notifications==0.0.4
+      - etils==1.13.0
+      
+      # Utility packages
+      - gym-notices==0.1.0
+      - typing_extensions==4.15.0
+      - importlib_resources==6.5.2
+      - zipp==3.23.0
+      
+      # Optional: MPI for distributed training (not installed in current env)
+      # Uncomment if you need multi-process training:
+      # - mpi4py>=3.0.0
+      
+      # Optional: Logging and visualization (add if needed)
+      # - tensorboard
+      # - matplotlib
+      # - pandas
+      # - tqdm
+
+# System Requirements:
+# - macOS (arm64/Apple Silicon) or Linux
+# - Conda or Miniconda installed
+# - For MuJoCo: libglew and other graphics libraries may be needed on Linux
+
+# Installation Instructions:
+# 1. Create the environment:
+#    conda env create -f environment.yml
+#
+# 2. Activate the environment:
+#    conda activate hdm2
+#
+# 3. Verify installation:
+#    python -c "import torch, numpy, gymnasium, metaworld, mujoco; print('All imports successful!')"
+#
+# 4. Test with a quick environment check:
+#    python tests/test_external_envs_integration.py --env metaworld_push
+
+# Important Notes:
+# - MuJoCo 3.2.0+ is REQUIRED for Shadow Hand environments
+# - If you see 'apirate' errors, you have MuJoCo 2.x libraries conflicting
+#   See docs/MUJOCO_FIX_GUIDE.md for troubleshooting
+# - The environment uses Gymnasium (new) alongside legacy Gym (0.26.2) for compatibility
+# - Metaworld 3.0.0 provides the V3 API which is different from older versions
+

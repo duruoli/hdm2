@@ -1,0 +1,65 @@
+# HDM Requirements - VERIFIED versions from hdm2 environment
+# Last verified: December 1, 2025
+# Python version required: 3.10.19
+
+# Deep Learning
+torch==2.9.1
+
+# Numerical Computing
+numpy==2.2.6
+scipy==1.15.3
+
+# Reinforcement Learning Environments
+gym==0.26.2
+gymnasium==1.2.2
+gymnasium-robotics==1.4.1
+metaworld==3.0.0
+
+# MuJoCo Physics (REQUIRED version 3.2.0+ for Shadow Hand)
+mujoco==3.2.0
+
+# Additional RL Environments
+box2d-py==2.3.8
+pettingzoo==1.25.0
+
+# Image Processing & I/O
+pillow==12.0.0
+imageio==2.37.2
+
+# Rendering
+PyOpenGL==3.1.10
+glfw==2.10.0
+
+# Utilities
+cloudpickle==3.1.2
+filelock==3.20.0
+packaging==25.0
+jinja2==3.1.6
+networkx==3.4.2
+sympy==1.14.0
+absl-py==2.3.1
+fsspec==2025.10.0
+
+# Farama Ecosystem
+Farama-Notifications==0.0.4
+etils==1.13.0
+gym-notices==0.1.0
+
+# Type Support
+typing_extensions==4.15.0
+importlib_resources==6.5.2
+zipp==3.23.0
+
+# Optional dependencies (uncomment if needed):
+# mpi4py>=3.0.0  # For distributed training
+# tensorboard  # For training visualization
+# matplotlib  # For plotting
+# pandas  # For data analysis
+# tqdm  # For progress bars
+
+# Installation:
+# pip install -r requirements.txt
+#
+# Or with conda (recommended):
+# conda env create -f environment.yml
+
