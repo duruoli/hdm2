@@ -28,13 +28,20 @@ Welcome to the HDM (Hindsight Divergence Minimization) documentation!
    - Environment-specific configuration
    - Advanced usage
 
-4. **[INTEGRATION_SUMMARY.md](INTEGRATION_SUMMARY.md)** 🔍
+4. **[VM_DEPLOYMENT_GUIDE.md](VM_DEPLOYMENT_GUIDE.md)** 🖥️ **NEW!**
+   - Deploy on cloud VMs and servers
+   - GPU and multi-core CPU optimization
+   - Automatic parallelization (already built-in!)
+   - MPI-based distributed training
+   - Performance benchmarks and monitoring
+
+5. **[INTEGRATION_SUMMARY.md](INTEGRATION_SUMMARY.md)** 🔍
    - Technical details of how HDM integrates with environments
    - Architecture overview
    - Implementation details
    - Code structure
 
-5. **[MUJOCO_FIX_GUIDE.md](MUJOCO_FIX_GUIDE.md)** 🛠️
+6. **[MUJOCO_FIX_GUIDE.md](MUJOCO_FIX_GUIDE.md)** 🛠️
    - Troubleshooting MuJoCo issues
    - Fixing 'apirate' errors (Shadow Hand)
    - Version conflict resolution
@@ -42,7 +49,7 @@ Welcome to the HDM (Hindsight Divergence Minimization) documentation!
 
 ### Legacy Documentation
 
-6. **[MIGRATION_GUIDE.md](MIGRATION_GUIDE.md)** (in `modern_envs/docs/`)
+7. **[MIGRATION_GUIDE.md](MIGRATION_GUIDE.md)** (in `modern_envs/docs/`)
    - How to migrate from old environments to new ones
    - API changes
 
@@ -60,6 +67,7 @@ understanding-hindsight-goal-relabeling-supplementary/
 │   ├── ENVIRONMENT_SETUP.md     # ⭐ START HERE - Setup guide
 │   ├── QUICK_START.md           # Quick start guide
 │   ├── EXTERNAL_ENVS_USAGE.md   # External environments guide
+│   ├── VM_DEPLOYMENT_GUIDE.md   # VM deployment & performance optimization
 │   ├── INTEGRATION_SUMMARY.md   # Technical integration details
 │   └── MUJOCO_FIX_GUIDE.md      # MuJoCo troubleshooting
 │
@@ -99,6 +107,7 @@ understanding-hindsight-goal-relabeling-supplementary/
 
 - **Set up my environment** → [`ENVIRONMENT_SETUP.md`](ENVIRONMENT_SETUP.md)
 - **Run my first experiment** → [`QUICK_START.md`](QUICK_START.md)
+- **Deploy on a VM or server** → [`VM_DEPLOYMENT_GUIDE.md`](VM_DEPLOYMENT_GUIDE.md) ⭐
 - **Use Metaworld/Fetch/Shadow Hand** → [`EXTERNAL_ENVS_USAGE.md`](EXTERNAL_ENVS_USAGE.md)
 - **Fix MuJoCo errors** → [`MUJOCO_FIX_GUIDE.md`](MUJOCO_FIX_GUIDE.md)
 - **Understand the codebase** → [`INTEGRATION_SUMMARY.md`](INTEGRATION_SUMMARY.md)
@@ -154,10 +163,12 @@ For new users, follow this order:
 1. **[ENVIRONMENT_SETUP.md](ENVIRONMENT_SETUP.md)** - Set up your environment
 2. **[QUICK_START.md](QUICK_START.md)** - Run your first experiment
 3. **[EXTERNAL_ENVS_USAGE.md](EXTERNAL_ENVS_USAGE.md)** - Learn about available environments
-4. **[INTEGRATION_SUMMARY.md](INTEGRATION_SUMMARY.md)** - Understand the implementation
-5. **[MUJOCO_FIX_GUIDE.md](MUJOCO_FIX_GUIDE.md)** - Troubleshoot if needed
+4. **[VM_DEPLOYMENT_GUIDE.md](VM_DEPLOYMENT_GUIDE.md)** - Deploy on powerful hardware (optional)
+5. **[INTEGRATION_SUMMARY.md](INTEGRATION_SUMMARY.md)** - Understand the implementation
+6. **[MUJOCO_FIX_GUIDE.md](MUJOCO_FIX_GUIDE.md)** - Troubleshoot if needed
 
 ---
 
 **Ready to start?** → Begin with [ENVIRONMENT_SETUP.md](ENVIRONMENT_SETUP.md) 🚀
+
 

@@ -46,15 +46,14 @@ See [`docs/QUICK_START.md`](docs/QUICK_START.md) for more examples and 28+ avail
 - 📖 **[Quick Start Guide](docs/QUICK_START.md)** - Get running in 5 minutes
 - 🔧 **[Environment Setup](docs/ENVIRONMENT_SETUP.md)** - Detailed installation with verified versions
 - 🌍 **[External Environments Usage](docs/EXTERNAL_ENVS_USAGE.md)** - Metaworld, Fetch, Shadow Hand, etc.
+- 🖥️ **[VM Deployment Guide](docs/VM_DEPLOYMENT_GUIDE.md)** - Deploy on cloud VMs, GPU/multi-core optimization
 - 🔍 **[Integration Summary](docs/INTEGRATION_SUMMARY.md)** - Technical details
 - 🛠️ **[MuJoCo Fix Guide](docs/MUJOCO_FIX_GUIDE.md)** - Troubleshooting MuJoCo issues
 
 ### Legacy GCSL Dependencies (Optional)
 
-The original GCSL environments are included in the `gcsl/` folder.  
+The original GCSL environments is based on: https://github.com/dibyaghosh/gcsl, The training scripts are provided in `scripts` folder. 
 For modern environments (Metaworld, Gymnasium-Robotics), you only need the main `environment.yml` setup.
-
-The training scripts are provided in `scripts` folder. 
 
 ## Development Notes
 
