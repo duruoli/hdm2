@@ -10,6 +10,7 @@
    cd understanding-hindsight-goal-relabeling-supplementary
    conda env create -f environment.yml
    conda activate hdm2
+   pip install -e .  # Install hdm and modern_envs packages
    ```
 
 2. **Your code is ALREADY optimized for multi-core and GPU!** ✅
@@ -37,7 +38,7 @@ sudo apt-get install -y \
 
 ### Step 1: Install Conda (if not already installed)
 ```bash
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+python -c "import urllib.request; urllib.request.urlretrieve('https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh', 'Miniconda3-latest-Linux-x86_64.sh')"
 bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/miniconda3
 source $HOME/miniconda3/bin/activate
 conda init
@@ -58,9 +59,13 @@ conda env create -f environment.yml
 # Activate environment
 conda activate hdm2
 
+# Install hdm and modern_envs packages
+pip install -e .
+
 # Verify installation
 python -c "import torch, numpy, gymnasium, metaworld, mujoco; print('✅ All imports successful!')"
 python -c "import torch; print(f'CUDA available: {torch.cuda.is_available()}')"
+python -c "import hdm, modern_envs; print('✅ HDM packages installed!')"
 ```
 
 ### Step 4: (Optional) Install MPI for Multi-Node Training
@@ -273,6 +278,30 @@ Based on your VM specs (32 CPUs, 1 GPU, 80GB RAM):
 
 ## Troubleshooting
 
+### Error: "modern_envs not found" or "hdm not found"
+
+**Cause:** The local packages haven't been installed
+
+**Solution:**
+```bash
+# Make sure you're in the repository root
+cd /path/to/understanding-hindsight-goal-relabeling-supplementary
+
+# Install packages in development mode
+pip install -e .
+
+# Verify
+python -c "import hdm, modern_envs; print('✅ Packages installed!')"
+```
+
+**For Singularity/Docker containers:**
+If you're in a container, make sure the repository is mounted and accessible:
+```bash
+# Inside container
+cd /path/to/mounted/repo
+pip install -e .
+```
+
 ### GPU Not Being Used
 
 **Check if PyTorch sees GPU:**
@@ -330,9 +359,10 @@ git clone <your-repo-url>
 cd understanding-hindsight-goal-relabeling-supplementary
 conda env create -f environment.yml
 conda activate hdm2
+pip install -e .
 
-# 2. Verify GPU
-python -c "import torch; print(f'CUDA: {torch.cuda.is_available()}')"
+# 2. Verify installation
+python -c "import torch, hdm, modern_envs; print(f'CUDA: {torch.cuda.is_available()}')"
 
 # 3. Run optimized training
 python -m hdm \

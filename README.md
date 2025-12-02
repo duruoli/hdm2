@@ -19,6 +19,9 @@ conda env create -f environment.yml
 # Activate environment
 conda activate hdm2
 
+# Install hdm and modern_envs packages
+pip install -e .
+
 # Verify installation
 python -c "import torch, numpy, gymnasium, metaworld, mujoco; print('✅ Setup complete!')"
 ```

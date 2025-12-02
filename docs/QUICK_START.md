@@ -3,24 +3,26 @@
 ## Installation (One Time)
 
 ```bash
-# Install Metaworld (requires 0.4+ for V3 environments)
-pip install metaworld
+# Create environment with all dependencies
+conda env create -f environment.yml
+conda activate hdm2
 
-# Install Gymnasium-Robotics (Shadow Hand environments need MuJoCo 3.2.0+)
-pip install gymnasium-robotics
-pip install mujoco>=3.2.0
+# Install hdm and modern_envs packages
+pip install -e .
 
-# Or all at once
-pip install -r requirements-external-envs.txt
+# Verify installation
+python -c "import torch, gymnasium, metaworld, mujoco, hdm, modern_envs; print('✅ Setup complete!')"
 ```
+
+**See [ENVIRONMENT_SETUP.md](ENVIRONMENT_SETUP.md) for detailed installation instructions.**
 
 ## Test Installation
 
 ```bash
 # Quick test - should show no errors if installed correctly
-python test_external_envs_integration.py --env metaworld_push
-python test_external_envs_integration.py --env fetch_push
-python test_external_envs_integration.py --env shadow_hand_block
+python tests/test_external_envs_integration.py --env metaworld_push
+python tests/test_external_envs_integration.py --env fetch_push
+python tests/test_external_envs_integration.py --env shadow_hand_block
 ```
 
 ## Train HDM (Basic)

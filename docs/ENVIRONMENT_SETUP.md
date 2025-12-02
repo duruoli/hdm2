@@ -13,8 +13,12 @@ conda env create -f environment.yml
 # Activate the environment
 conda activate hdm2
 
+# Install hdm and modern_envs packages
+pip install -e .
+
 # Verify installation
 python -c "import torch, numpy, gymnasium, metaworld, mujoco; print('✅ All core packages imported successfully!')"
+python -c "import hdm, modern_envs; print('✅ HDM packages installed!')"
 python --version  # Should show: Python 3.10.19
 ```
 
@@ -27,8 +31,12 @@ python --version  # Should be 3.10.x
 # Install all dependencies
 pip install -r requirements.txt
 
+# Install hdm and modern_envs packages
+pip install -e .
+
 # Verify installation
 python -c "import torch, numpy, gymnasium, metaworld, mujoco; print('✅ All core packages imported successfully!')"
+python -c "import hdm, modern_envs; print('✅ HDM packages installed!')"
 ```
 
 ## Verified Environment Specifications

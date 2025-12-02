@@ -13,6 +13,7 @@ dependencies:
   
   # Core dependencies installed via conda (if available)
   - pip
+  - swig
   
   # Install Python packages via pip
   - pip:
