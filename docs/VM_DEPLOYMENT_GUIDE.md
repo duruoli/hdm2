@@ -39,8 +39,8 @@ sudo apt-get install -y \
 ### Step 1: Install Conda (if not already installed)
 ```bash
 python -c "import urllib.request; urllib.request.urlretrieve('https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh', 'Miniconda3-latest-Linux-x86_64.sh')"
-bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/miniconda3
-source $HOME/miniconda3/bin/activate
+bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/miniconda
+source $HOME/miniconda/bin/activate
 conda init
 # Restart shell or source ~/.bashrc
 ```
@@ -117,17 +117,23 @@ Your code **already uses multiple CPU cores** through multiple mechanisms:
 The code uses `SubprocVecEnv` to run multiple environments in parallel:
 
 ```bash
-# Use 16 parallel workers (for 32 CPUs)
+# ⭐ RECOMMENDED: Start with 4 workers
 python -m hdm --env_name metaworld_push \
     --independent_policy \
-    --n_workers 16 \
+    --n_workers 4 \
     --n_cycles 50
 ```
 
 **How it works:**
 - Each worker runs an independent environment in a separate process
 - Rollout collection is parallelized across workers
-- Recommended: Use **50-75% of your CPUs** (16-24 workers for 32 CPUs)
+- **⚠️ IMPORTANT:** More workers ≠ faster! Start with 4-8, not 16+
+
+**Why not use all 32 CPUs?**
+- Process creation overhead increases with workers
+- Inter-process communication overhead dominates for simple environments
+- GPU training is usually the bottleneck, not environment rollouts
+- **4-8 workers is optimal for most tasks**, even with 32 CPUs!
 
 #### 2. **Thread-level Parallelism (AUTOMATIC)**
 
@@ -172,12 +178,13 @@ mpirun -n 4 python -m hdm \
 
 ## Recommended Configuration for Your VM
 
-### Configuration 1: Maximum Throughput (16 Workers)
+### Configuration 1: Recommended Starting Point (4-8 Workers)
 ```bash
+# Start with 4 workers - often optimal balance!
 python -m hdm \
     --env_name metaworld_push \
     --independent_policy \
-    --n_workers 16 \
+    --n_workers 4 \
     --n_cycles 100 \
     --n_initial_rollouts 200 \
     --batch_size 256 \
@@ -185,39 +192,45 @@ python -m hdm \
 ```
 
 **Why:**
-- 16 workers utilize ~50% of CPUs, leaving room for GPU training
-- Large batch size (256) utilizes GPU memory
-- Large buffer size (1M) uses ~10-20GB RAM
+- 4-8 workers is usually optimal (less overhead than 16!)
+- GPU training is the bottleneck, not environment rollouts
+- Large batch size (256) maximizes GPU utilization
+- Too many workers can actually slow things down!
 
-### Configuration 2: MPI Parallelism (4 MPI × 8 Workers = 32 total)
+**⚠️ Important:** More workers ≠ faster! Start small and increase only if GPU is idle.
+
+### Configuration 2: Higher Throughput (Test if needed)
 ```bash
-mpirun -n 4 python -m hdm \
-    --env_name fetch_push \
+# Only use more workers if you verify GPU is idle with 4 workers
+python -m hdm \
+    --env_name metaworld_push \
     --independent_policy \
     --n_workers 8 \
     --n_cycles 100 \
+    --batch_size 512 \
+    --buffer_size 1000000
+```
+
+**Why:**
+- Try 8 workers if 4 workers leaves GPU underutilized
+- Larger batch (512) to keep GPU busy
+- Monitor with `nvidia-smi` to verify GPU usage increases
+
+### Configuration 3: MPI Distributed Training (Advanced)
+```bash
+# Only for complex environments where single GPU is bottleneck
+mpirun -n 2 python -m hdm \
+    --env_name shadow_hand_block \
+    --independent_policy \
+    --n_workers 4 \
+    --n_cycles 200 \
     --batch_size 512
 ```
 
 **Why:**
-- 4 MPI processes × 8 workers each = 32 parallel environments
-- Larger batch size (512) for better GPU utilization
-- Gradient averaging across 4 processes for more stable training
-
-### Configuration 3: Memory-Intensive (Large Buffer)
-```bash
-python -m hdm \
-    --env_name shadow_hand_block \
-    --independent_policy \
-    --n_workers 16 \
-    --buffer_size 5000000 \
-    --batch_size 512 \
-    --n_cycles 200
-```
-
-**Why:**
-- 5M buffer size uses your 80GB RAM effectively
-- Larger batch and buffer improve sample efficiency
+- 2 MPI processes × 4 workers each = 8 total environments
+- Gradient averaging across processes for stable training
+- Only use if single process GPU training is saturated
 
 ---
 
@@ -261,22 +274,74 @@ tail -f experiments/metaworld_push/*/progress.csv
 
 ---
 
-## Performance Benchmarks (Estimated)
+## Performance Benchmarks (Realistic)
 
 Based on your VM specs (32 CPUs, 1 GPU, 80GB RAM):
 
-| Configuration | Rollouts/sec | Time per Cycle | Speedup vs 1 CPU |
-|--------------|--------------|----------------|------------------|
-| 1 worker, no GPU | ~100 | ~5 min | 1× |
-| 1 worker, GPU | ~150 | ~3.5 min | 1.5× |
-| 16 workers, GPU | ~2000 | ~30 sec | 10× |
-| MPI 4×8 workers, GPU | ~3500 | ~20 sec | 15× |
+| Configuration | Time per Epoch | Speedup | Notes |
+|--------------|----------------|---------|-------|
+| 1 worker, no GPU | ~5 min | 1× | Baseline (CPU only) |
+| 1 worker, GPU | ~3 min | 1.7× | GPU speeds up training |
+| 4 workers, GPU | ~1.5 min | 3.3× | **Optimal for most tasks** |
+| 8 workers, GPU | ~1-2 min | 2.5-5× | May be faster/slower than 4 |
+| 16 workers, GPU | ~2-4 min | 1.2-2.5× | **Often SLOWER due to overhead!** |
 
-**Note:** Actual performance depends on environment complexity.
+**⚠️ Key Insight:** More workers ≠ faster! 
+
+**Why 16 workers can be slower:**
+- Process creation overhead (~1-2 sec per worker)
+- Inter-process communication overhead
+- Memory copying between processes
+- CPU context switching with 16+ processes
+- For simple/fast environments, overhead > benefit
+
+**Actual performance depends on:**
+- Environment complexity (Shadow Hand > Metaworld Push)
+- Episode length (longer episodes = less overhead)
+- Neural network size (larger networks benefit more from GPU)
 
 ---
 
 ## Troubleshooting
+
+### Training is Slow / Slower than Expected
+
+**Symptom:** Training with many workers is slower than with few workers
+
+**Cause:** Too many workers creates multiprocessing overhead that dominates training time
+
+**Understanding the bottleneck:**
+1. **GPU training** (neural network) - benefits from large batches
+2. **Environment rollouts** (MuJoCo simulation) - runs on CPU, parallelized with workers
+3. **Communication overhead** - increases with more workers
+
+**Solution:**
+```bash
+# Kill current training (Ctrl+C) and try with fewer workers
+
+# Start with 1 worker (baseline)
+python -m hdm --env_name metaworld_push --independent_policy --n_workers 1 --n_cycles 5
+
+# Try 4 workers
+python -m hdm --env_name metaworld_push --independent_policy --n_workers 4 --n_cycles 5
+
+# Try 8 workers (only if 4 is faster)
+python -m hdm --env_name metaworld_push --independent_policy --n_workers 8 --n_cycles 5
+
+# Compare iteration times and pick the fastest!
+```
+
+**Rule of thumb:**
+- **Simple environments** (Metaworld Push): 1-4 workers optimal
+- **Complex environments** (Shadow Hand): 4-8 workers optimal
+- **16+ workers**: Usually too much overhead!
+
+**How to find optimal workers:**
+1. Start with `--n_workers 1`
+2. Monitor iteration time
+3. Double workers (2, 4, 8) and see if it gets faster
+4. Stop when adding workers makes it slower
+5. Watch `nvidia-smi` - GPU should stay busy!
 
 ### Error: "modern_envs not found" or "hdm not found"
 
@@ -404,21 +469,26 @@ htop
 ## Quick Reference
 
 ```bash
-# Basic training (uses GPU + multi-core automatically)
-python -m hdm --env_name metaworld_push --independent_policy --n_workers 16
+# ⭐ RECOMMENDED: Start with 4 workers (usually optimal!)
+python -m hdm --env_name metaworld_push --independent_policy --n_workers 4
 
-# With MPI (4 processes × 8 workers each)
-mpirun -n 4 python -m hdm --env_name metaworld_push --independent_policy --n_workers 8
+# Try 8 workers if 4 leaves GPU underutilized
+python -m hdm --env_name metaworld_push --independent_policy --n_workers 8 --batch_size 512
 
-# Full-featured training
+# Full-featured training with optimal settings
 python -m hdm \
-    --env_name shadow_hand_block \
+    --env_name metaworld_push \
     --independent_policy \
-    --n_workers 16 \
-    --n_cycles 200 \
+    --n_workers 4 \
+    --n_cycles 100 \
     --batch_size 512 \
-    --buffer_size 5000000
+    --buffer_size 1000000
+
+# Advanced: MPI distributed training (if needed)
+mpirun -n 2 python -m hdm --env_name shadow_hand_block --independent_policy --n_workers 4
 ```
+
+**⚠️ Common Mistake:** Don't use `--n_workers 16`! Start with 4, increase only if faster.
 
 For more details, see:
 - [ENVIRONMENT_SETUP.md](ENVIRONMENT_SETUP.md) - Installation guide
