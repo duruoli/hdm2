@@ -50,6 +50,16 @@ class BoxGoalEnvWrapper(gym.Env):
         else:
             self.obs_indices = np.array(obs_indices)
         
+        # Map achieved_goal_indices from full obs to state (obs part)
+        # This is needed for goal_distance to extract achieved goals from states
+        self.achieved_goal_in_state_indices = []
+        for ag_idx in self.achieved_goal_indices:
+            # Find where this index appears in obs_indices
+            matches = np.where(self.obs_indices == ag_idx)[0]
+            if len(matches) > 0:
+                self.achieved_goal_in_state_indices.append(matches[0])
+        self.achieved_goal_in_state_indices = np.array(self.achieved_goal_in_state_indices)
+        
         goal_dim = len(self.goal_indices)
         obs_dim = len(self.obs_indices)
         
@@ -155,11 +165,31 @@ class BoxGoalEnvWrapper(gym.Env):
     
     def goal_distance(self, state1, state2):
         """
-        Compute distance between goals in two states.
+        Compute distance between achieved goal in state1 and desired goal in state2.
+        
+        This measures: How close did we get (achieved) to the target (desired)?
+        - state1: Current state (extract achieved goal from observation part)
+        - state2: Goal state (extract desired goal)
         """
-        goal1 = self.extract_goal(state1)
-        goal2 = self.extract_goal(state2)
-        return np.linalg.norm(goal1 - goal2, axis=-1)
+        # Extract observation from state1
+        obs1 = self.observation(state1)
+        
+        # Extract achieved goal from obs1 using mapped indices
+        if len(self.achieved_goal_in_state_indices) > 0:
+            # Extract achieved goal from observation part of state
+            if state1.ndim == 1:
+                achieved_goal = obs1[self.achieved_goal_in_state_indices]
+            else:
+                achieved_goal = obs1[..., self.achieved_goal_in_state_indices]
+        else:
+            # If achieved goal indices weren't in obs_indices, fall back to comparing desired goals
+            # This is a fallback for incorrectly configured wrappers
+            achieved_goal = self.extract_goal(state1)
+        
+        # Extract desired goal from state2
+        desired_goal = self.extract_goal(state2)
+        
+        return np.linalg.norm(achieved_goal - desired_goal, axis=-1)
     
     def seed(self, seed=None):
         """Set random seed."""
@@ -178,6 +208,8 @@ class BoxGoalEnvWrapper(gym.Env):
     def close(self):
         """Close the environment."""
         return self.env.close()
+
+
 
 
 

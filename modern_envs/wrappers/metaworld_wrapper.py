@@ -15,18 +15,34 @@ class MetaworldGoalWrapper(gym.Env):
     Wrapper for Metaworld V3 environments to make them HDM-compatible.
     
     Metaworld observations are flat vectors where:
-    - The goal is embedded in the observation (typically last 3 dimensions)
-    - We need to extract and expose it properly for HDM
+    - obs[0:3] = hand/gripper position
+    - obs[3] = gripper state
+    - obs[4:7] = object position (ACHIEVED GOAL - what robot actually moved)
+    - ... other state info ...
+    - obs[-3:] = desired goal position (TARGET)
+    
+    For success measurement, we compare ACHIEVED goal (object position) 
+    with DESIRED goal (target position).
     """
     
-    def __init__(self, env, goal_dim=3):
+    def __init__(self, env, goal_dim=3, achieved_goal_indices=None):
         """
         Args:
             env: The base Metaworld environment
             goal_dim: Dimension of the goal (default: 3 for xyz position)
+            achieved_goal_indices: Indices for achieved goal in observation.
+                                   Default: [4, 5, 6] (object position)
         """
         self.env = env
         self.goal_dim = goal_dim
+        
+        # Metaworld standard observation structure:
+        # obs[4:7] = object/puck position (achieved goal)
+        # obs[-3:] = desired goal position
+        if achieved_goal_indices is None:
+            self.achieved_goal_indices = [4, 5, 6]  # Object position
+        else:
+            self.achieved_goal_indices = achieved_goal_indices
         
         # Metaworld observation includes the goal, but we need to separate them
         # Total obs = robot_state + object_state + goal
@@ -96,8 +112,21 @@ class MetaworldGoalWrapper(gym.Env):
         return state[..., :obs_dim]
     
     def extract_goal(self, state):
-        """Extract goal from state (last goal_dim dimensions)."""
+        """Extract DESIRED goal from state (last goal_dim dimensions)."""
         return state[..., -self.goal_dim:]
+    
+    def extract_achieved_goal(self, state):
+        """
+        Extract ACHIEVED goal from state (object position).
+        
+        This is typically the object/puck position that the robot manipulates,
+        NOT the desired target position.
+        """
+        if state.ndim == 1:
+            return state[self.achieved_goal_indices].copy()
+        else:
+            # Batched states
+            return state[..., self.achieved_goal_indices].copy()
     
     def sample_goal(self):
         """
@@ -118,13 +147,21 @@ class MetaworldGoalWrapper(gym.Env):
     
     def goal_distance(self, state1, state2):
         """
-        Compute distance between goals in two states.
+        Compute distance between ACHIEVED goal in state1 and DESIRED goal in state2.
         
-        For Metaworld, we compare the goal positions (last 3 dimensions).
+        This measures how close the robot got (achieved) to the target (desired).
+        - state1: Current state (we extract achieved goal = object position)
+        - state2: Goal state (we extract desired goal = target position)
+        
+        Returns:
+            Distance between achieved goal and desired goal
         """
-        goal1 = self.extract_goal(state1)
-        goal2 = self.extract_goal(state2)
-        return np.linalg.norm(goal1 - goal2, axis=-1)
+        # Achieved goal = where the object actually is (from state1)
+        achieved_goal = self.extract_achieved_goal(state1)
+        # Desired goal = where we want the object to be (from state2)
+        desired_goal = self.extract_goal(state2)
+        
+        return np.linalg.norm(achieved_goal - desired_goal, axis=-1)
     
     def seed(self, seed=None):
         """Set random seed."""

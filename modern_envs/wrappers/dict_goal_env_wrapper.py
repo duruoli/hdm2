@@ -62,9 +62,11 @@ class DictGoalEnvWrapper(gym.Env):
         # Extract spaces from dict
         obs_space = env.observation_space['observation']
         goal_space = env.observation_space[goal_key]
+        achieved_goal_space = env.observation_space[achieved_goal_key]
         
         obs_dim = obs_space.shape[0]
         goal_dim = goal_space.shape[0]
+        achieved_goal_dim = achieved_goal_space.shape[0]
         
         # Define HDM-compatible spaces
         self.observation_space = Box(
@@ -79,23 +81,38 @@ class DictGoalEnvWrapper(gym.Env):
             shape=(goal_dim,), 
             dtype=np.float32
         )
+        # State now includes: [obs, desired_goal, achieved_goal]
+        # This allows goal_distance to extract achieved goals properly
         self.state_space = Box(
             low=-np.inf, 
             high=np.inf, 
-            shape=(obs_dim + goal_dim,), 
+            shape=(obs_dim + goal_dim + achieved_goal_dim,), 
             dtype=np.float32
         )
         self.action_space = env.action_space
+        self.achieved_goal_dim = achieved_goal_dim
         
-        # Store current goal for step
+        # Store current goal and achieved goal for step
         self._current_goal = None
+        self._current_achieved_goal = None
+        self._last_obs_dict = None
     
     def _dict_to_state(self, obs_dict):
-        """Convert dict observation to state vector."""
+        """
+        Convert dict observation to state vector.
+        
+        State format: [obs, desired_goal, achieved_goal]
+        This allows goal_distance to properly extract achieved goals for HER.
+        """
         obs = obs_dict['observation'].astype(np.float32)
-        goal = obs_dict[self.goal_key].astype(np.float32)
-        self._current_goal = goal
-        return np.concatenate([obs, goal])
+        desired_goal = obs_dict[self.goal_key].astype(np.float32)
+        achieved_goal = obs_dict[self.achieved_goal_key].astype(np.float32)
+        
+        self._current_goal = desired_goal
+        self._current_achieved_goal = achieved_goal
+        self._last_obs_dict = obs_dict
+        
+        return np.concatenate([obs, desired_goal, achieved_goal])
     
     def reset(self, **kwargs):
         """Reset environment and return state (obs + goal)."""
@@ -132,15 +149,23 @@ class DictGoalEnvWrapper(gym.Env):
         return state[..., :obs_dim]
     
     def extract_goal(self, state):
-        """Extract goal from state."""
+        """Extract DESIRED goal from state (not achieved goal)."""
         obs_dim = self.observation_space.shape[0]
-        return state[..., obs_dim:]
+        goal_dim = self.goal_space.shape[0]
+        return state[..., obs_dim:obs_dim+goal_dim]
+    
+    def extract_achieved_goal(self, state):
+        """Extract ACHIEVED goal from state."""
+        obs_dim = self.observation_space.shape[0]
+        goal_dim = self.goal_space.shape[0]
+        return state[..., obs_dim+goal_dim:]
     
     def sample_goal(self):
         """
         Sample a random goal state for HER.
         
-        This resets the environment and extracts the achieved goal as a possible goal.
+        This resets the environment and uses the achieved goal as the desired goal.
+        For HER relabeling, we sample achieved states as new goals.
         """
         result = self.env.reset()
         
@@ -151,34 +176,35 @@ class DictGoalEnvWrapper(gym.Env):
             obs_dict = result
         
         obs = obs_dict['observation'].astype(np.float32)
-        # Use achieved goal as the desired goal for sampling
-        goal = obs_dict[self.achieved_goal_key].astype(np.float32)
+        # Use achieved goal as BOTH the desired goal (for sampling) and achieved goal
+        # This represents a state where the goal was reached
+        achieved = obs_dict[self.achieved_goal_key].astype(np.float32)
         
-        return np.concatenate([obs, goal])
+        # State format: [obs, desired_goal, achieved_goal]
+        # For sampled goals, desired = achieved (we reached this state)
+        return np.concatenate([obs, achieved, achieved])
     
     def goal_distance(self, state1, state2):
         """
-        Compute distance between goals in two states.
+        Compute distance between achieved goal in state1 and desired goal in state2.
         
-        For dict-based envs, we compare achieved goals, not desired goals.
-        The achieved goal is typically a function of the observation.
+        Now that state includes [obs, desired_goal, achieved_goal], we can directly
+        extract both for proper distance computation.
+        
+        Args:
+            state1: Current state [obs, desired_goal, achieved_goal]
+            state2: Goal state [obs, desired_goal, achieved_goal]
+        
+        Returns:
+            Distance between achieved goal in state1 and desired goal in state2
         """
-        obs1 = self.observation(state1)
-        obs2 = self.observation(state2)
+        # Extract achieved goal from state1 (what we actually accomplished)
+        achieved_goal = self.extract_achieved_goal(state1)
         
-        # Get achieved goals from observations
-        # We need to temporarily reconstruct dict format to query achieved_goal
-        # For simplicity, we'll use the environment's compute_reward if available
-        # Otherwise, fall back to goal distance
+        # Extract desired goal from state2 (what we're trying to reach)
+        desired_goal = self.extract_goal(state2)
         
-        # Extract desired goals from states
-        goal1 = self.extract_goal(state1)
-        goal2 = self.extract_goal(state2)
-        
-        # Compute distance between desired goals
-        # Note: For proper HER, you'd want to compare achieved goals
-        # but since we only have state, we compare desired goals
-        return np.linalg.norm(goal1 - goal2, axis=-1)
+        return np.linalg.norm(achieved_goal - desired_goal, axis=-1)
     
     def compute_reward(self, achieved_goal, desired_goal, info):
         """
