@@ -113,6 +113,68 @@ python examples/train_hand_manipulate_pen.py
 - `adroit_hand_relocate` / `hand_relocate`
 - **Note**: Uses Box observation space with embedded goals (different from Shadow Hand)
 
+### Box2D / Classic Control
+
+**Lunar Lander** ✅ Working
+- `lunar` (goal-conditioned landing task)
+- **Note**: Box2D physics environment - different from robotics tasks
+- Requires specific HDM parameters (see below)
+
+## Running LunarLander (Special Case)
+
+LunarLander is **different** from robotics tasks because:
+- Uses Box2D physics (not MuJoCo)
+- Already has discrete actions (4 actions: nop, left, main engine, right)
+- Requires DQN-based HDM parameters
+
+### Basic Command
+
+```bash
+python -m hdm --env_name lunar --use_dqn --greedy_action
+```
+
+### Full Training Command (Recommended)
+
+```bash
+python -m hdm \
+    --env_name lunar \
+    --use_dqn \
+    --greedy_action \
+    --double_dqn \
+    --lr_actor 5.e-4 \
+    --random_act_prob 0.1 \
+    --backup_temp 1.0 \
+    --future_p 0.85 \
+    --relabeled_reward_only \
+    --next_state_p 0.5 \
+    --hdm_online_o2 \
+    --hdm_q_coef 1.0 \
+    --hdm_gamma 0.6 \
+    --hdm_bc \
+    --hdm_weights_to_indicator \
+    --targ_clip \
+    --seed 0
+```
+
+### Key Hyperparameters for LunarLander
+
+- `--use_dqn`: Use DQN instead of DDPG (required for discrete actions)
+- `--greedy_action`: Use greedy action selection
+- `--double_dqn`: Use Double DQN to reduce overestimation
+- `--lr_actor 5.e-4`: Learning rate for Q-network
+- `--random_act_prob 0.1`: Epsilon for exploration
+- `--targ_clip`: Clip target Q-values
+
+### Testing LunarLander Installation
+
+```bash
+# Test the environment
+python modern_envs/tests/test_lunar.py
+
+# Quick HDM test run (fewer steps)
+python -m hdm --env_name lunar --use_dqn --greedy_action --n_cycles 5
+```
+
 ## Programmatic Usage
 
 ```python

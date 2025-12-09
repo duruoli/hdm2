@@ -50,6 +50,12 @@ class LunarEnv(GoalEnv, Serializable):
 
         self.action_space = self.inner_env.action_space
     
+    def seed(self, seed=None):
+        """Set the random seed for both inner environments."""
+        self.inner_env.seed(seed)
+        self.inner_env_render.seed(seed)
+        return [seed]
+    
     def render(self, *args, **kwargs):
         return self.inner_env.render(*args, **kwargs)
 
