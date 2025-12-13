@@ -202,7 +202,7 @@ class DictGoalEnvWrapper(gym.Env):
         achieved_goal = self.extract_achieved_goal(state1)
         
         # Extract desired goal from state2 (what we're trying to reach)
-        desired_goal = self.extract_goal(state2)
+        desired_goal = self.extract_achieved_goal(state2)
         
         return np.linalg.norm(achieved_goal - desired_goal, axis=-1)
     

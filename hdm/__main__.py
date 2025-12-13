@@ -10,10 +10,19 @@ from gym.spaces import Discrete
 
 # Try to use modern environments first, fallback to gcsl
 try:
+    # #region agent log
+    import json,time;open('/Users/duruoli/A/A李杜若/1-科研/PhD/0/1-code/hdm2/.cursor/debug.log','a').write(json.dumps({'sessionId':'debug-session','runId':'pre-fix','hypothesisId':'H1,H2,H3','location':'__main__.py:12','message':'Attempting modern_envs import','data':{},'timestamp':int(time.time()*1000)})+'\n')
+    # #endregion
     import modern_envs as envs
     from modern_envs.wrappers import DiscretizedActionEnv
+    # #region agent log
+    import json,time;open('/Users/duruoli/A/A李杜若/1-科研/PhD/0/1-code/hdm2/.cursor/debug.log','a').write(json.dumps({'sessionId':'debug-session','runId':'pre-fix','hypothesisId':'H1','location':'__main__.py:16','message':'modern_envs imported successfully','data':{'has_sawyer':hasattr(envs,'SawyerPushGoalEnv')},'timestamp':int(time.time()*1000)})+'\n')
+    # #endregion
     print("✅ Using modern MuJoCo environments (no compilation needed!)")
-except ImportError:
+except ImportError as e:
+    # #region agent log
+    import json,time;open('/Users/duruoli/A/A李杜若/1-科研/PhD/0/1-code/hdm2/.cursor/debug.log','a').write(json.dumps({'sessionId':'debug-session','runId':'pre-fix','hypothesisId':'H1,H2,H3','location':'__main__.py:18','message':'modern_envs import failed','data':{'error':str(e),'error_type':type(e).__name__},'timestamp':int(time.time()*1000)})+'\n')
+    # #endregion
     print("⚠️  Falling back to old gcsl environments (requires mujoco_py)")
     from gcsl import envs
     from gcsl.envs.env_utils import DiscretizedActionEnv

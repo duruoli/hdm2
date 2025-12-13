@@ -159,7 +159,7 @@ class MetaworldGoalWrapper(gym.Env):
         # Achieved goal = where the object actually is (from state1)
         achieved_goal = self.extract_achieved_goal(state1)
         # Desired goal = where we want the object to be (from state2)
-        desired_goal = self.extract_goal(state2)
+        desired_goal = self.extract_achieved_goal(state2)
         
         return np.linalg.norm(achieved_goal - desired_goal, axis=-1)
     
