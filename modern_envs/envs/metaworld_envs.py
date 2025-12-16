@@ -43,8 +43,8 @@ def create_metaworld_env(env_name, render_mode=None):
     env.set_task(task)
     
     # Wrap for HDM
-    # Metaworld goals are typically 3D positions (xyz)
-    wrapped_env = MetaworldGoalWrapper(env, goal_dim=3)
+    # Uses default indices: robot=[0,1,2], object=[4,5,6]
+    wrapped_env = MetaworldGoalWrapper(env)
     
     return wrapped_env
 

@@ -59,21 +59,28 @@ cd /home/dlf8982/AAA/hdm2
 
 # Run HDM training on metaworld_door_open
 python -m hdm \
-    --env_name metaworld_door_open \
+    --env_name metaworld_push \
     --independent_policy \
+    --greedy_action \
+    --use_dqn \
+    --double_dqn \
+    --targ_clip \
+    --lr_actor 5.e-4 \
+    --random_act_prob 0.2 \
+    --backup_temp 1.0 \
+    --future_p 0.85 \
+    --relabeled_reward_only \
+    --next_state_p 0.6 \
+    --hdm_q_coef 1.0 \
+    --hdm_gamma 0.5 \
+    --hdm_bc \
+    --hdm_weights_to_indicator \
+    --hdm_online_o2 \
     --n_cycles 40 \
     --n_initial_rollouts 200 \
     --n_test_rollouts 50 \
     --batch_size 256 \
     --buffer_size 1000000 \
-    --future_p 0.85 \
-    --hdm_q_coef 1.0 \
-    --hdm_bc \
-    --hdm_weights_to_indicator \
-    --hdm_online_o2 \
-    --use_dqn \
-    --double_dqn \
-    --targ_clip \
     --seed 0
 
 echo "============================================"

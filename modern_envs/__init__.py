@@ -13,7 +13,7 @@ from modern_envs.wrappers import DiscretizedActionEnv, Discretized
 from modern_envs.utils import Serializable, MultitaskEnv
 
 # Import specific environments
-from modern_envs.envs.sawyer_push import SawyerPushGoalEnv
+from modern_envs.envs.hand_written.sawyer_push import SawyerPushGoalEnv
 from modern_envs.envs.lunar_lander import LunarEnv
 
 # Try to import external environment integrations (optional)
