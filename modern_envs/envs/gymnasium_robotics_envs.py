@@ -63,7 +63,7 @@ def create_gymnasium_robotics_env(env_id, render_mode=None, **kwargs):
     # Wrap based on observation space type
     if is_dict_space:
         # Standard goal-conditioned environments (Fetch, PointMaze, Shadow Hand)
-        wrapped_env = DictGoalEnvWrapper(env, goal_key='desired_goal', achieved_goal_key='achieved_goal')
+        wrapped_env = DictGoalEnvWrapper(env, goal_key='achieved_goal', state_goal_key='achieved_goal')
         return wrapped_env
     elif 'Adroit' in env_id:
         # Adroit Hand environments have Box observations with embedded goals
