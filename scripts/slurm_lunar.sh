@@ -60,7 +60,6 @@ cd /home/dlf8982/AAA/hdm2
 # Run HDM training on lunar lander
 python -m hdm \
     --env_name lunar \
-    --independent_policy \
     --greedy_action \
     --use_dqn \
     --double_dqn \
