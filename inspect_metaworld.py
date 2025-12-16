@@ -86,3 +86,4 @@ print(f"\n\nTrying to find goal by checking task object:")
 print(f"Task object: {task}")
 if hasattr(task, 'data'):
     print(f"Task data keys: {task.data.keys() if hasattr(task.data, 'keys') else task.data}")
+
