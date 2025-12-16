@@ -1,6 +1,5 @@
 # Exclude specific directories
 gcsl/
-experiments/
 
 # Python
 __pycache__/
