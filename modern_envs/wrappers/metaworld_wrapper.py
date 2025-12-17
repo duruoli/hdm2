@@ -26,7 +26,7 @@ class MetaworldGoalWrapper(gym.Env):
     The goal is NOT in MetaWorld's observation - it's stored in env._target_pos.
     """
     
-    def __init__(self, env, robot_indices=None, object_indices=None):
+    def __init__(self, env, robot_indices=None, object_indices=None, task_list=None):
         """
         Args:
             env: The base Metaworld environment
@@ -34,9 +34,11 @@ class MetaworldGoalWrapper(gym.Env):
                           Default: [0, 1, 2] (gripper xyz)
             object_indices: Indices for object position in observation.
                            Default: [4, 5, 6] (object xyz)
+            task_list: List of tasks to sample from on each reset (for randomization)
         """
         self.env = env
         self.action_space = env.action_space
+        self.task_list = task_list  # Store task list for randomization
         
         # Default indices for MetaWorld
         if robot_indices is None:
@@ -105,8 +107,9 @@ class MetaworldGoalWrapper(gym.Env):
             base_obs: MetaWorld observation (39D flat array)
             
         Returns:
-            state: [observation, achieved_goal, achieved_goal]
-                   where achieved_goal = [gripper_xyz, object_xyz]
+            state: [observation, goal, sgoal]
+                   where goal = [gripper_xyz, object_xyz]
+                   and sgoal = [gripper_xyz, object_xyz]
         """
         obs = base_obs.flatten()
         
@@ -126,6 +129,12 @@ class MetaworldGoalWrapper(gym.Env):
         Returns:
             state: [observation, achieved_goal, achieved_goal]
         """
+        # Randomize task if task list is provided
+        if self.task_list is not None and len(self.task_list) > 0:
+            import random
+            task = random.choice(self.task_list)
+            self.env.set_task(task)
+        
         result = self.env.reset(**kwargs)
         
         # Handle new gym API (returns obs, info)
@@ -221,19 +230,11 @@ class MetaworldGoalWrapper(gym.Env):
         obs = obs.astype(np.float32)
         
         # Get the desired goal position from environment
-        desired_goal_pos = self.env._target_pos.copy()  # Target object position (3D)
+        object_target = self.env._target_pos.copy()  # 3D object xyz
+        gripper_target = object_target.copy()  # Gripper should be near/at object target (this is psuedo desired gripper position)
+        goal_6d = np.concatenate([gripper_target, object_target])  # 6D [gripper_xyz, object_xyz]
+        goal_state = np.r_[obs, goal_6d, goal_6d]
         
-        # Create a goal state where achieved_goal = desired_goal
-        # achieved_goal = [gripper_xyz, object_xyz]
-        # For the goal state, both gripper and object should be at/near the target
-        gripper_at_goal = desired_goal_pos[:len(self.robot_indices)]  # Use target pos for gripper too
-        object_at_goal = desired_goal_pos[:len(self.object_indices)]   # Object at target
-        
-        achieved_goal_at_target = np.concatenate([gripper_at_goal, object_at_goal])
-        
-        # Create goal state: [obs (placeholder), achieved_goal, achieved_goal]
-        # The observation part is not critical for goal sampling
-        goal_state = np.r_[obs, achieved_goal_at_target, achieved_goal_at_target]
         
         return goal_state.astype(np.float32)
     

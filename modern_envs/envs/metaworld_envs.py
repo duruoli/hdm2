@@ -38,13 +38,13 @@ def create_metaworld_env(env_name, render_mode=None):
     env_cls = ml1.train_classes[env_name]
     env = env_cls(render_mode=render_mode)
     
-    # Set a task (for ML1, there's typically one task per environment)
+    # Set initial task from the task list
     task = ml1.train_tasks[0]
     env.set_task(task)
     
-    # Wrap for HDM
+    # Wrap for HDM with task list for randomization on each reset
     # Uses default indices: robot=[0,1,2], object=[4,5,6]
-    wrapped_env = MetaworldGoalWrapper(env)
+    wrapped_env = MetaworldGoalWrapper(env, task_list=ml1.train_tasks)
     
     return wrapped_env
 

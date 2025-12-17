@@ -117,11 +117,11 @@ def get_env_params(env_name, images=False):
         max_timesteps=1e6,
     )
 
-    if env_name == 'pusher':
+    if 'metaworld' in env_name: #metaworld_push, metaworld_door_open
         env_specific_params = dict(
             goal_threshold=0.05,
         )
-    elif 'pointmass' in env_name:
+    elif 'pointmaze' in env_name:
         env_specific_params = dict(
             goal_threshold=0.08,
             max_timesteps=2e5,
@@ -132,6 +132,10 @@ def get_env_params(env_name, images=False):
             goal_threshold=0.08,
             max_timesteps=2e5,
             eval_freq=2000,
+        )
+    elif "hand" in env_name:
+        env_specific_params = dict(
+            goal_threshold=0.1,
         )
     else:
         raise NotImplementedError(f"Environment {env_name} not recognized")
