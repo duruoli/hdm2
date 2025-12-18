@@ -1,6 +1,5 @@
 # Exclude specific directories
 gcsl/
-experiments/
 tests/
 examples/
 
