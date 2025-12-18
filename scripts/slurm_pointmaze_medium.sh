@@ -70,7 +70,7 @@ python -m hdm \
     --backup_temp 1.0 \
     --future_p 0.85 \
     --relabeled_reward_only \
-    --next_state_p 0.2 \
+    --next_state_p 0.6 \
     --hdm_q_coef 1.0 \
     --hdm_gamma 0.85 \
     --hdm_bc \

@@ -14,11 +14,11 @@
 
 #SBATCH --mem=40G  ## RAM per node (40GB should be sufficient for this task)
 
-#SBATCH --job-name=metaworld_door_open  ## Job name for identification
+#SBATCH --job-name=fetch_reach  ## Job name for identification
 
-#SBATCH --output=experiments/slurm_docs/metaworld_door_open_%j.out  ## Output file with job ID
+#SBATCH --output=experiments/slurm_docs/fetch_reach_%j.out  ## Output file with job ID
 
-#SBATCH --error=experiments/slurm_docs/metaworld_door_open_%j.err  ## Error file with job ID
+#SBATCH --error=experiments/slurm_docs/fetch_reach_%j.err  ## Error file with job ID
 
 #SBATCH --mail-type=ALL  ## Email alerts for job status
 
@@ -51,28 +51,28 @@ nvidia-smi
 echo "============================================"
 
 # ============================================
-# Run Training: Metaworld Door Open
+# Run Training: Fetch Reach
 # ============================================
 
 # Your project directory on Quest
 cd /home/dlf8982/AAA/hdm2
 
-# Run HDM training on metaworld_door_open
+# Run HDM training on fetch reach
 python -m hdm \
-    --env_name metaworld_door_open \
+    --env_name fetch_reach \
     --independent_policy \
     --greedy_action \
     --use_dqn \
     --double_dqn \
     --targ_clip \
     --lr_actor 5.e-4 \
-    --random_act_prob 0.2 \
+    --random_act_prob 0.1 \
     --backup_temp 1.0 \
     --future_p 0.85 \
     --relabeled_reward_only \
-    --next_state_p 0.6 \
+    --next_state_p 0.5 \
     --hdm_q_coef 1.0 \
-    --hdm_gamma 0.3 \
+    --hdm_gamma 0.85 \
     --hdm_bc \
     --hdm_weights_to_indicator \
     --hdm_online_o2 \
@@ -81,9 +81,8 @@ python -m hdm \
     --n_test_rollouts 50 \
     --batch_size 256 \
     --buffer_size 1000000 \
-    --seed 651
+    --seed 0
 
 echo "============================================"
 echo "Job completed at: $(date)"
 echo "============================================"
-
