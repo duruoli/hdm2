@@ -261,7 +261,7 @@ class MetaworldGoalWrapper(gym.Env):
         diff = achieved_goal - desired_goal
         
         # Use only object position for distance (indices 3:6 = object_xyz)
-        distances = np.linalg.norm(diff[..., 0:6], axis=-1)
+        distances = np.linalg.norm(diff[..., 3:6], axis=-1)
         return distances
     
     def seed(self, seed=None):
