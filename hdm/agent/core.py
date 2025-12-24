@@ -46,7 +46,7 @@ class StateGoalNet(nn.Module):
         return self.net(embed)
 
 
-def logits_selection(logits, target):
+def logits_selection(logits, target): #select from all actions' logits, pick the one for the target action
     assert logits.dim() == 2
     assert not target.requires_grad
     if target.dim() == 2:
