@@ -147,7 +147,7 @@ class Learner:
         return loss_q
     
     def update(self, batch):
-        if self.args.use_dqn:
+        if self.args.use_dqn: 
             loss_actor = self.dqn_loss(batch)
         else:
             loss_actor = self.actor_loss(batch)
