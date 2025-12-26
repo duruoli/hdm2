@@ -59,27 +59,27 @@ class Learner:
         ob, act, bg = batch['ob'], batch['act'], batch['bg']
         ob_2, act_2 = batch['ob_2'], batch['act_2']
         offset = torch_utils.from_numpy(batch['offset'])
-        reward = batch['reward']
+        reward = batch['reward'] #here it's already the relabeled reward: reward = transitions['r_relabel'] from replay's core.py
         reward = reward * self.args.reward_scale + self.args.reward_bias
         reward = torch_utils.from_numpy(reward)
         relabel_mask = torch_utils.from_numpy(batch['relabel_mask'])
         
         with torch.no_grad():
             if self.args.double_dqn:
-                act_2 = torch.argmax(self.agent.forward(ob_2, bg), dim=-1)
+                act_2 = torch.argmax(self.agent.forward(ob_2, bg), dim=-1) #select action with online network
             q_o2_a2, q_o2_dict = self.agent.q_function(
                 ob_2, bg, act_2, target_network=True,
                 temp=self.args.backup_temp, backup_epsilon=self.args.backup_epsilon,
-            )
+            ) #evaluate action with target network; q_o2_dict is not specific to act_2, it's q-values statistics (e.g., max, softmax average) over all possible actions by target network
             q_o2_targ = q_o2_dict[self.args.backup_strategy]
             if self.args.double_dqn:
                 q_o2_targ = q_o2_a2
-            q_targ = reward + self.args.gamma * q_o2_targ
+            q_targ = reward + self.args.gamma * q_o2_targ #double dqn q_o2_targ is wrt act_2 selected by online/current network; while standard dqn, q_o2_targ is not wrt any specific act_2, is a statistics (e.g., max, softmax average) based on target, also the only policy network
             if self.args.targ_clip:
                 q_targ = q_targ.clamp(max=0.0)
         
-        q_bg, q_bg_dict = self.agent.q_function(ob, bg, act, target_network=False, temp=self.args.backup_temp)
-        loss_her = (q_bg - q_targ).pow(2).mean()
+        q_bg, q_bg_dict = self.agent.q_function(ob, bg, act, target_network=False, temp=self.args.backup_temp) #q_bg is not wrt relabeled goal, it's for original goal, i.e., bg
+        loss_her = (q_bg - q_targ).pow(2).mean() #loss of her using TD error
         
         hdm_gamma_auto = offset.mean() / (1 + offset.mean())
         
