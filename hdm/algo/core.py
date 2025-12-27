@@ -197,7 +197,7 @@ class Algo(BaseAlgo):
             ag_changed = self.env.goal_distance(state, state_origin) > self.goal_threshold
             self.monitor.store(Inner_Train_AgChangeRatio=np.mean(ag_changed))
             self.total_timesteps += self.num_envs * self.n_mpi
-            for every_env_step in range(self.num_envs):
+            for every_env_step in range(self.num_envs): #number of parallel envs
                 self.env_steps += 1
                 if self.env_steps % self.args.optimize_every == 0 \
                     and self.env_steps > self.args.start_policy_timesteps \
@@ -226,15 +226,15 @@ class Algo(BaseAlgo):
     def update_normalizer(self, buffer):
         pass
     
-    def run(self):
+    def run(self): #epoch = evaluation (multiple test rollouts) > cycle > rollout= trajectory, episode > policy update
         for n_init_rollout in range(self.args.n_initial_rollouts // self.num_envs):
-            self.collect_experience(greedy=False, random_act_prob=1.0, train_agent=False)
+            self.collect_experience(greedy=False, random_act_prob=1.0, train_agent=False) #interact with env and store trajectories in replay buffer; trigger learning (agent_optimize())
         
         epoch = 0
-        while self.env_steps < self.env_params['max_timesteps']:
+        while self.env_steps < self.env_params['max_timesteps']: #max_timesteps is total env steps across all epochs; will continue the loop until reaching max_timesteps
             epoch += 1
             
-            success_rate, final_dist = self.run_eval()
+            success_rate, final_dist = self.run_eval() #evaluate at the start of each epoch (test previous updated policy)
             if success_rate > self.best_success_rate:
                 self.best_success_rate = success_rate
             if mpi_utils.is_root():
