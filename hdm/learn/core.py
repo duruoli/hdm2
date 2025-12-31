@@ -85,15 +85,15 @@ class Learner:
         
         with torch.no_grad():
             hdm_q_o1 = q_bg
-            hdm_q_o2 = q_o2_a2
+            hdm_q_o2 = q_o2_a2 #if backup_strategy is 'act_2', Q(s',a',s+), a' is either from batch (collected trajectory) or from online policy (double dqn)
             hdm_q_o2_dict = q_o2_dict
-            if self.args.hdm_online_o2:
+            if self.args.hdm_online_o2: #if hdm_online_o2, use online network, different from q_o2_a2 above which is from target network (both are double dqn cases)
                 hdm_q_o2, hdm_q_o2_dict = self.agent.q_function(
                     ob_2, bg, act_2, target_network=False,
                     temp=self.args.backup_temp, backup_epsilon=self.args.backup_epsilon,
                 )
             if self.args.hdm_backup_strategy != 'act_2':
-                hdm_q_o2 = hdm_q_o2_dict[self.args.hdm_backup_strategy]
+                hdm_q_o2 = hdm_q_o2_dict[self.args.hdm_backup_strategy] #e.g., max_a'Q(s',a',s+), Q is online network vs q_o2_targ=max_a'Q^(s',a',s+), Q^ is target network
             hdm_gamma = self.args.hdm_gamma
             if self.args.hdm_gamma_use_auto:
                 hdm_gamma = hdm_gamma_auto.item()
