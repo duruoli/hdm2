@@ -190,6 +190,9 @@ def get_args():
     parser.add_argument('--hdm_gamma_use_auto', action='store_true')
     parser.add_argument('--hdm_weights_relabel_mask', action='store_true')
     
+    parser.add_argument('--debug_log_trajectories', action='store_true',
+                        help='Log detailed trajectories (gripper/object positions, actions) for debugging')
+    
     return parser.parse_args()
 
 

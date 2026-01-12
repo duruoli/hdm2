@@ -69,6 +69,10 @@ class BaseAlgo:
         total_success_count = 0
         total_trial_count = 0
         dist_list = []
+        
+        self.eval_count += 1
+        log_this_eval = self.debug_log_trajectories
+        
         for n_test in range(self.args.n_test_rollouts):
             state = env.reset()
             state_origin = state.copy()
@@ -76,12 +80,55 @@ class BaseAlgo:
             goal_state = env.sample_goal()
             bg = env.extract_goal(goal_state)
             ag_changed = None
+            
+            # Only log first rollout in this eval
+            log_this_rollout = log_this_eval and (n_test == 0)
+            traj_data = [] if log_this_rollout else None
+            
             for timestep in range(self.env_params['max_trajectory_length']):
                 act = self.get_actions(ob, bg, greedy=True, random_act_prob=0.0)
+                
+                # Log trajectory data
+                if log_this_rollout:
+                    gripper_pos = ob[0:3] if ob.ndim == 1 else ob[0, 0:3]
+                    object_pos = ob[4:7] if ob.ndim == 1 else ob[0, 4:7]
+                    goal_object_pos = bg[3:6] if bg.ndim == 1 else bg[0, 3:6]
+                    
+                    traj_data.append({
+                        'timestep': timestep,
+                        'gripper_pos': tuple(gripper_pos.tolist()),
+                        'object_pos': tuple(object_pos.tolist()),
+                        'goal_obj_pos': tuple(goal_object_pos.tolist()),
+                        'action': int(act) if act.ndim == 0 else int(act[0]),
+                        'gripper_to_obj_dist': float(np.linalg.norm(gripper_pos - object_pos)),
+                        'obj_to_goal_dist': float(np.linalg.norm(object_pos - goal_object_pos)),
+                    })
+                
                 state, _, _, _ = env.step(act)
                 ob = env.observation(state)
                 ag_changed = self.env.goal_distance(state, state_origin) > self.goal_threshold
                 self.monitor.store(Inner_Test_AgChangeRatio=np.mean(ag_changed))
+            
+            # Save eval trajectory log
+            if log_this_rollout and traj_data:
+                import pandas as pd
+                df = pd.DataFrame(traj_data)
+                self.trajectory_logs.append({
+                    'type': 'eval',
+                    'eval_num': self.eval_count,
+                    'env_steps': self.env_steps,
+                    'data': df
+                })
+                if mpi_utils.is_root():
+                    print(f"\n{'='*80}")
+                    print(f"Eval Trajectory #{self.eval_count} (env_steps={self.env_steps})")
+                    print(f"{'='*80}")
+                    print(df.to_string(max_rows=20))
+                    final_gripper_obj = df.iloc[-1]['gripper_to_obj_dist']
+                    final_obj_goal = df.iloc[-1]['obj_to_goal_dist']
+                    print(f"\nFinal distances: gripper->object={final_gripper_obj:.4f}, object->goal={final_obj_goal:.4f}")
+                    print(f"{'='*80}\n")
+            
             assert ag_changed is not None
             self.monitor.store(TestAgChangeRatio=np.mean(ag_changed))
             if self.num_envs > 1:
@@ -160,6 +207,12 @@ class Algo(BaseAlgo):
             agent, replay, monitor, learner,
             name=name,
         )
+        
+        # Trajectory logging for debugging
+        self.debug_log_trajectories = getattr(args, 'debug_log_trajectories', False)
+        self.collect_count = 0
+        self.eval_count = 0
+        self.trajectory_logs = []
     
     def agent_optimize(self):
         self.timer.start('train')
@@ -187,8 +240,33 @@ class Algo(BaseAlgo):
         ag_changed = None
         self.agent.eval()
         
+        # Track if this is the first trajectory in this collect period
+        self.collect_count += 1
+        log_this_traj = self.debug_log_trajectories and (self.collect_count == 1 or 
+                        (self.collect_count - 1) % self.args.num_rollouts_per_mpi == 0)
+        
+        traj_data = [] if log_this_traj else None
+        
         for timestep in range(self.env_params['max_trajectory_length']):
             act = self.get_actions(ob, bg, greedy=greedy, random_act_prob=random_act_prob)
+            
+            # Log trajectory data for debugging
+            if log_this_traj:
+                # Extract gripper and object positions from observation
+                gripper_pos = ob[0:3] if ob.ndim == 1 else ob[0, 0:3]
+                object_pos = ob[4:7] if ob.ndim == 1 else ob[0, 4:7]
+                goal_object_pos = bg[3:6] if bg.ndim == 1 else bg[0, 3:6]  # Goal object pos from achieved_goal
+                
+                traj_data.append({
+                    'timestep': timestep,
+                    'gripper_pos': tuple(gripper_pos.tolist()),
+                    'object_pos': tuple(object_pos.tolist()),
+                    'goal_obj_pos': tuple(goal_object_pos.tolist()),
+                    'action': int(act) if act.ndim == 0 else int(act[0]),
+                    'gripper_to_obj_dist': float(np.linalg.norm(gripper_pos - object_pos)),
+                    'obj_to_goal_dist': float(np.linalg.norm(object_pos - goal_object_pos)),
+                })
+            
             state_list.append(state.copy())
             bg_state_list.append(goal_state.copy())
             act_list.append(act.copy())
@@ -203,6 +281,17 @@ class Algo(BaseAlgo):
                     and self.env_steps > self.args.start_policy_timesteps \
                     and train_agent:
                     self.agent_optimize()
+        
+        # Save trajectory log
+        if log_this_traj and traj_data:
+            import pandas as pd
+            df = pd.DataFrame(traj_data)
+            self.trajectory_logs.append({
+                'type': 'train',
+                'collect_num': self.collect_count,
+                'env_steps': self.env_steps,
+                'data': df
+            })
         
         state_list.append(state.copy())
         act = self.get_actions(ob, bg, greedy=greedy, random_act_prob=random_act_prob)
@@ -225,6 +314,24 @@ class Algo(BaseAlgo):
     
     def update_normalizer(self, buffer):
         pass
+    
+    def save_trajectory_logs(self):
+        """Save all logged trajectories to CSV files."""
+        if self.debug_log_trajectories and mpi_utils.is_root():
+            import pandas as pd
+            log_dir = osp.join(self.log_path, 'trajectory_logs')
+            os.makedirs(log_dir, exist_ok=True)
+            
+            for i, log_entry in enumerate(self.trajectory_logs):
+                if log_entry['type'] == 'train':
+                    filename = f"train_{log_entry['collect_num']:04d}_steps{log_entry['env_steps']}.csv"
+                else:
+                    filename = f"eval_{log_entry['eval_num']:04d}_steps{log_entry['env_steps']}.csv"
+                filepath = osp.join(log_dir, filename)
+                log_entry['data'].to_csv(filepath, index=False)
+                print(f"Saved trajectory log: {filepath}")
+            
+            print(f"\nTotal trajectory logs saved: {len(self.trajectory_logs)}")
     
     def run(self): #epoch = evaluation (multiple test rollouts) > cycle > rollout= trajectory, episode > policy update
         for n_init_rollout in range(self.args.n_initial_rollouts // self.num_envs):
@@ -274,6 +381,9 @@ class Algo(BaseAlgo):
             self.log_everything()
             
             self.save_all(self.model_path)
+        
+        # Save trajectory logs at the end of training
+        self.save_trajectory_logs()
     
     def state_dict(self):
         return dict(total_timesteps=self.total_timesteps)
