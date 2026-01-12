@@ -119,15 +119,6 @@ class BaseAlgo:
                     'env_steps': self.env_steps,
                     'data': df
                 })
-                if mpi_utils.is_root():
-                    print(f"\n{'='*80}")
-                    print(f"Eval Trajectory #{self.eval_count} (env_steps={self.env_steps})")
-                    print(f"{'='*80}")
-                    print(df.to_string(max_rows=20))
-                    final_gripper_obj = df.iloc[-1]['gripper_to_obj_dist']
-                    final_obj_goal = df.iloc[-1]['obj_to_goal_dist']
-                    print(f"\nFinal distances: gripper->object={final_gripper_obj:.4f}, object->goal={final_obj_goal:.4f}")
-                    print(f"{'='*80}\n")
             
             assert ag_changed is not None
             self.monitor.store(TestAgChangeRatio=np.mean(ag_changed))

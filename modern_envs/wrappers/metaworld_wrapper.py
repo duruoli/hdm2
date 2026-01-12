@@ -220,13 +220,13 @@ class MetaworldGoalWrapper(gym.Env):
         Returns:
             goal_state: A full state where object is at the target position
         """
-        # result = self.env.reset()
+        result = self.env.reset()
         
-        # if isinstance(result, tuple):
-        #     obs, info = result
-        # else:
-        #     obs = result
-        obs = self.env._get_obs()
+        if isinstance(result, tuple):
+            obs, info = result
+        else:
+            obs = result
+        # obs = self.env._get_obs()
         obs = obs.astype(np.float32)
         
         # Get the desired goal position from environment
@@ -238,31 +238,59 @@ class MetaworldGoalWrapper(gym.Env):
         
         return goal_state.astype(np.float32)
     
-    def goal_distance(self, state, goal_state):
-        """
-        Compute distance between achieved goal and desired goal.
+    # def goal_distance(self, state, goal_state):
+    #     """
+    #     Compute distance between achieved goal and desired goal.
         
-        Following GCSL pattern: only compare OBJECT positions, not gripper.
+    #     Following GCSL pattern: only compare OBJECT positions, not gripper.
         
-        Args:
-            state: Current state
-            goal_state: Goal state
+    #     Args:
+    #         state: Current state
+    #         goal_state: Goal state
             
-        Returns:
-            distances: L2 distance between object positions
-        """
-        # Extract achieved goals (both are [gripper_xyz, object_xyz])
+    #     Returns:
+    #         distances: L2 distance between object positions
+    #     """
+    #     # Extract achieved goals (both are [gripper_xyz, object_xyz])
+    #     achieved_goal = self._extract_sgoal(state)
+    #     desired_goal = self._extract_sgoal(goal_state)
+        
+    #     # Compare ONLY object positions (last 3 elements)
+    #     # achieved_goal = [gripper_xyz, object_xyz] = 6D
+    #     # We want object_xyz which is indices [3:6]
+    #     diff = achieved_goal - desired_goal
+        
+    #     # Use only object position for distance (indices 3:6 = object_xyz)
+    #     distances = np.linalg.norm(diff[..., 3:6], axis=-1)
+    #     return distances
+    
+    def goal_distance(self, state, goal_state):
         achieved_goal = self._extract_sgoal(state)
         desired_goal = self._extract_sgoal(goal_state)
-        
-        # Compare ONLY object positions (last 3 elements)
-        # achieved_goal = [gripper_xyz, object_xyz] = 6D
-        # We want object_xyz which is indices [3:6]
         diff = achieved_goal - desired_goal
         
-        # Use only object position for distance (indices 3:6 = object_xyz)
-        distances = np.linalg.norm(diff[..., 3:6], axis=-1)
+        # Extract components
+        gripper_diff = diff[..., 0:3]  # gripper xyz difference
+        object_diff = diff[..., 3:6]   # object xyz difference
+        
+        # Gripper-to-object distance in current state
+        gripper_pos = achieved_goal[..., 0:3]
+        object_pos = achieved_goal[..., 3:6]
+        gripper_to_obj = np.linalg.norm(gripper_pos - object_pos, axis=-1)
+        
+        # Adaptive weighting based on proximity
+        reach_threshold = 0.05  # 5cm
+        alpha = (gripper_to_obj > reach_threshold).astype(float)  # 1 if far, 0 if close
+        
+        # Distances
+        gripper_goal_dist = np.linalg.norm(gripper_diff, axis=-1)
+        object_goal_dist = np.linalg.norm(object_diff, axis=-1)
+        
+        # Weighted distance
+        distances = alpha * gripper_goal_dist + (1 - alpha) * object_goal_dist
+        
         return distances
+
     
     def seed(self, seed=None):
         """Set random seed."""
