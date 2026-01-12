@@ -220,13 +220,13 @@ class MetaworldGoalWrapper(gym.Env):
         Returns:
             goal_state: A full state where object is at the target position
         """
-        result = self.env.reset()
+        # result = self.env.reset()
         
-        if isinstance(result, tuple):
-            obs, info = result
-        else:
-            obs = result
-        
+        # if isinstance(result, tuple):
+        #     obs, info = result
+        # else:
+        #     obs = result
+        obs = self.env._get_obs()
         obs = obs.astype(np.float32)
         
         # Get the desired goal position from environment
