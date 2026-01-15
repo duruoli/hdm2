@@ -1,0 +1,1530 @@
+============================================
+Job started at: Thu Jan 15 11:31:40 CST 2026
+Running on node: qgpu0406
+Job ID: 5948710
+============================================
+Python 3.10.19
+Thu Jan 15 11:31:40 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 570.86.15              Driver Version: 570.86.15      CUDA Version: 12.8     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA A100-PCIE-40GB          On  |   00000000:06:00.0 Off |                    0 |
+| N/A   21C    P0             29W /  250W |       1MiB /  40960MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+============================================
+✅ Using modern MuJoCo environments (no compilation needed!)
+Using CUDA ..
+{'goal_threshold': 0.05, 'max_trajectory_length': 500, 'max_timesteps': 1000000.0, 'eval_freq': 10000, 'eval_episodes': 50}
+Initializing IndependentDiscretePolicy ...
+replay_size: 2000
+Logging to experiments/metaworld_push/Jan-15-11-32-11
+[36;1mSaving config:
+[0m
+{
+    "goal_threshold":	0.05,
+    "max_trajectory_length":	500,
+    "max_timesteps":	null,
+    "eval_freq":	10000,
+    "eval_episodes":	50,
+    "obs_dim":	39,
+    "goal_dim":	6,
+    "independent_policy":	true,
+    "action_space.n":	81,
+    "action_space.n_dims":	4,
+    "action_space.granularity":	3,
+    "env_name":	"metaworld_push",
+    "seed":	890,
+    "save_dir":	"experiments/",
+    "ckpt_name":	"Jan-15-11-32-11",
+    "resume_ckpt":	"",
+    "n_workers":	1,
+    "num_rollouts_per_mpi":	1,
+    "n_cycles":	40,
+    "optimize_every":	50,
+    "n_batches":	50,
+    "target_update_freq":	10,
+    "greedy_action":	true,
+    "random_act_prob":	0.2,
+    "buffer_size":	1000000,
+    "future_p":	0.85,
+    "next_state_p":	0.6,
+    "relabeled_reward_only":	true,
+    "batch_size":	256,
+    "lr_actor":	0.0005,
+    "start_policy_timesteps":	1000,
+    "n_initial_rollouts":	200,
+    "n_test_rollouts":	50,
+    "max_epochs":	15,
+    "gamma":	0.98,
+    "polyak":	0.995,
+    "use_dqn":	true,
+    "double_dqn":	true,
+    "backup_strategy":	"q_max",
+    "backup_temp":	1.0,
+    "backup_epsilon":	0.1,
+    "reward_scale":	1.0,
+    "reward_bias":	-1.0,
+    "targ_clip":	true,
+    "hdm_gamma":	0.5,
+    "hdm_weights_min":	-5.0,
+    "hdm_weights_max":	5.0,
+    "hdm_q_coef":	1.0,
+    "hdm_q_normalizer":	false,
+    "hdm_online_o2":	true,
+    "hdm_backup_strategy":	"act_2",
+    "hdm_bc":	true,
+    "hdm_weights_to_indicator":	true,
+    "hdm_gamma_use_auto":	false,
+    "hdm_weights_relabel_mask":	false,
+    "debug_log_trajectories":	true,
+    "NUM_MPI":	1
+}
+Epoch 1 eval | final dist 0.432 | success rate 0.000 | best success 0.000
+ckpt_name: Jan-15-11-32-11
+Epoch 1: Iter (out of 40)= 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39
+-----------------------------------------
+| env_steps                 | 1.2e+05   |
+| Epoch                     | 1         |
+| exp_avg_reward            | 0.616     |
+| exp_reward_avg            | 0.693     |
+| hdm_gamma                 | 0.5       |
+| hdm_gamma_auto            | 0.98      |
+| hdm_gamma_zero_point      | 0.925     |
+| hdm_q_o1                  | -2.43     |
+| hdm_q_o2                  | -2.38     |
+| hdm_q_to_minimize         | 0.00133   |
+| hdm_weights               | -0.00915  |
+| Inner_Test_AgChangeRatio  | 0.99      |
+| Inner_Train_AgChangeRatio | 0.94      |
+| log_hdm_gamma             | -0.693    |
+| Loss_hdm                  | -0.000235 |
+| Loss_her                  | 0.0555    |
+| Loss_q                    | 0.0553    |
+| offset                    | 49.9      |
+| opt_steps                 | 2e+04     |
+| q_bg                      | -2.43     |
+| q_o2_a2                   | -1.98     |
+| q_o2_eps_greedy           | -1.95     |
+| q_o2_max                  | -1.95     |
+| q_o2_soft                 | -1.99     |
+| q_o2_soft_kl              | -1.99     |
+| q_o2_targ                 | -1.98     |
+| q_targ                    | -2.43     |
+| replay_fill_ratio         | 0.12      |
+| replay_size               | 240       |
+| reward                    | -0.485    |
+| TestAgChangeRatio         | 1         |
+| TestBestSuccessRate       | 0         |
+| TestFinalDist             | 0.432     |
+| TestSuccessRate           | 0         |
+| Time                      | 396       |
+| TimePerSeqRollout         | 4.5       |
+| TimePerTrainIter          | 0.00758   |
+| TotalTimeSteps            | 1.2e+05   |
+| TrainAgChangeRatio        | 1         |
+| TrainSuccess              | 0.00417   |
+-----------------------------------------
+Epoch 2 eval | final dist 0.296 | success rate 0.200 | best success 0.200
+ckpt_name: Jan-15-11-32-11
+Epoch 2: Iter (out of 40)= 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39
+----------------------------------------
+| env_steps                 | 1.4e+05  |
+| Epoch                     | 2        |
+| exp_avg_reward            | 0.616    |
+| exp_reward_avg            | 0.693    |
+| hdm_gamma                 | 0.5      |
+| hdm_gamma_auto            | 0.98     |
+| hdm_gamma_zero_point      | 0.942    |
+| hdm_q_o1                  | -5.6     |
+| hdm_q_o2                  | -5.54    |
+| hdm_q_to_minimize         | 0.0102   |
+| hdm_weights               | -0.0318  |
+| Inner_Test_AgChangeRatio  | 0.988    |
+| Inner_Train_AgChangeRatio | 0.982    |
+| log_hdm_gamma             | -0.693   |
+| Loss_hdm                  | -0.00166 |
+| Loss_her                  | 0.111    |
+| Loss_q                    | 0.109    |
+| offset                    | 49.9     |
+| opt_steps                 | 4e+04    |
+| q_bg                      | -5.6     |
+| q_o2_a2                   | -5.2     |
+| q_o2_eps_greedy           | -5.14    |
+| q_o2_max                  | -5.13    |
+| q_o2_soft                 | -5.2     |
+| q_o2_soft_kl              | -5.2     |
+| q_o2_targ                 | -5.2     |
+| q_targ                    | -5.6     |
+| replay_fill_ratio         | 0.14     |
+| replay_size               | 280      |
+| reward                    | -0.485   |
+| TestAgChangeRatio         | 1        |
+| TestBestSuccessRate       | 0.2      |
+| TestFinalDist             | 0.296    |
+| TestSuccessRate           | 0.2      |
+| Time                      | 613      |
+| TimePerSeqRollout         | 4.47     |
+| TimePerTrainIter          | 0.00752  |
+| TotalTimeSteps            | 1.4e+05  |
+| TrainAgChangeRatio        | 1        |
+| TrainSuccess              | 0        |
+----------------------------------------
+Epoch 3 eval | final dist 0.389 | success rate 0.000 | best success 0.200
+ckpt_name: Jan-15-11-32-11
+Epoch 3: Iter (out of 40)= 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39
+----------------------------------------
+| env_steps                 | 1.6e+05  |
+| Epoch                     | 3        |
+| exp_avg_reward            | 0.616    |
+| exp_reward_avg            | 0.693    |
+| hdm_gamma                 | 0.5      |
+| hdm_gamma_auto            | 0.98     |
+| hdm_gamma_zero_point      | 0.98     |
+| hdm_q_o1                  | -8.32    |
+| hdm_q_o2                  | -8.28    |
+| hdm_q_to_minimize         | 0.0213   |
+| hdm_weights               | -0.0429  |
+| Inner_Test_AgChangeRatio  | 0.988    |
+| Inner_Train_AgChangeRatio | 0.98     |
+| log_hdm_gamma             | -0.693   |
+| Loss_hdm                  | -0.00357 |
+| Loss_her                  | 0.202    |
+| Loss_q                    | 0.198    |
+| offset                    | 50       |
+| opt_steps                 | 6e+04    |
+| q_bg                      | -8.32    |
+| q_o2_a2                   | -7.98    |
+| q_o2_eps_greedy           | -7.87    |
+| q_o2_max                  | -7.86    |
+| q_o2_soft                 | -7.97    |
+| q_o2_soft_kl              | -7.98    |
+| q_o2_targ                 | -7.98    |
+| q_targ                    | -8.32    |
+| replay_fill_ratio         | 0.16     |
+| replay_size               | 320      |
+| reward                    | -0.485   |
+| TestAgChangeRatio         | 1        |
+| TestBestSuccessRate       | 0.2      |
+| TestFinalDist             | 0.389    |
+| TestSuccessRate           | 0        |
+| Time                      | 831      |
+| TimePerSeqRollout         | 4.51     |
+| TimePerTrainIter          | 0.0076   |
+| TotalTimeSteps            | 1.6e+05  |
+| TrainAgChangeRatio        | 1        |
+| TrainSuccess              | 0.1      |
+----------------------------------------
+Epoch 4 eval | final dist 0.550 | success rate 0.000 | best success 0.200
+ckpt_name: Jan-15-11-32-11
+Epoch 4: Iter (out of 40)= 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39
+----------------------------------------
+| env_steps                 | 1.8e+05  |
+| Epoch                     | 4        |
+| exp_avg_reward            | 0.616    |
+| exp_reward_avg            | 0.693    |
+| hdm_gamma                 | 0.5      |
+| hdm_gamma_auto            | 0.98     |
+| hdm_gamma_zero_point      | 1.06     |
+| hdm_q_o1                  | -10.7    |
+| hdm_q_o2                  | -10.8    |
+| hdm_q_to_minimize         | 0.0241   |
+| hdm_weights               | -0.0494  |
+| Inner_Test_AgChangeRatio  | 0.985    |
+| Inner_Train_AgChangeRatio | 0.982    |
+| log_hdm_gamma             | -0.693   |
+| Loss_hdm                  | -0.00512 |
+| Loss_her                  | 0.327    |
+| Loss_q                    | 0.322    |
+| offset                    | 50       |
+| opt_steps                 | 8e+04    |
+| q_bg                      | -10.7    |
+| q_o2_a2                   | -10.5    |
+| q_o2_eps_greedy           | -10.3    |
+| q_o2_max                  | -10.2    |
+| q_o2_soft                 | -10.4    |
+| q_o2_soft_kl              | -10.4    |
+| q_o2_targ                 | -10.5    |
+| q_targ                    | -10.7    |
+| replay_fill_ratio         | 0.18     |
+| replay_size               | 360      |
+| reward                    | -0.485   |
+| TestAgChangeRatio         | 1        |
+| TestBestSuccessRate       | 0.2      |
+| TestFinalDist             | 0.55     |
+| TestSuccessRate           | 0        |
+| Time                      | 1.05e+03 |
+| TimePerSeqRollout         | 4.46     |
+| TimePerTrainIter          | 0.00751  |
+| TotalTimeSteps            | 1.8e+05  |
+| TrainAgChangeRatio        | 1        |
+| TrainSuccess              | 0.15     |
+----------------------------------------
+Epoch 5 eval | final dist 0.394 | success rate 0.020 | best success 0.200
+ckpt_name: Jan-15-11-32-11
+Epoch 5: Iter (out of 40)= 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39
+----------------------------------------
+| env_steps                 | 2e+05    |
+| Epoch                     | 5        |
+| exp_avg_reward            | 0.616    |
+| exp_reward_avg            | 0.693    |
+| hdm_gamma                 | 0.5      |
+| hdm_gamma_auto            | 0.98     |
+| hdm_gamma_zero_point      | 1.13     |
+| hdm_q_o1                  | -13.5    |
+| hdm_q_o2                  | -13.7    |
+| hdm_q_to_minimize         | -0.00445 |
+| hdm_weights               | -0.0542  |
+| Inner_Test_AgChangeRatio  | 0.971    |
+| Inner_Train_AgChangeRatio | 0.98     |
+| log_hdm_gamma             | -0.693   |
+| Loss_hdm                  | -0.00448 |
+| Loss_her                  | 0.572    |
+| Loss_q                    | 0.568    |
+| offset                    | 49.9     |
+| opt_steps                 | 1e+05    |
+| q_bg                      | -13.5    |
+| q_o2_a2                   | -13.2    |
+| q_o2_eps_greedy           | -12.9    |
+| q_o2_max                  | -12.8    |
+| q_o2_soft                 | -13.1    |
+| q_o2_soft_kl              | -13.1    |
+| q_o2_targ                 | -13.2    |
+| q_targ                    | -13.5    |
+| replay_fill_ratio         | 0.2      |
+| replay_size               | 400      |
+| reward                    | -0.485   |
+| TestAgChangeRatio         | 1        |
+| TestBestSuccessRate       | 0.2      |
+| TestFinalDist             | 0.394    |
+| TestSuccessRate           | 0.02     |
+| Time                      | 1.26e+03 |
+| TimePerSeqRollout         | 4.47     |
+| TimePerTrainIter          | 0.00754  |
+| TotalTimeSteps            | 2e+05    |
+| TrainAgChangeRatio        | 1        |
+| TrainSuccess              | 0.075    |
+----------------------------------------
+Epoch 6 eval | final dist 0.780 | success rate 0.000 | best success 0.200
+ckpt_name: Jan-15-11-32-11
+Epoch 6: Iter (out of 40)= 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39
+----------------------------------------
+| env_steps                 | 2.2e+05  |
+| Epoch                     | 6        |
+| exp_avg_reward            | 0.616    |
+| exp_reward_avg            | 0.693    |
+| hdm_gamma                 | 0.5      |
+| hdm_gamma_auto            | 0.98     |
+| hdm_gamma_zero_point      | 1.06     |
+| hdm_q_o1                  | -16.7    |
+| hdm_q_o2                  | -17      |
+| hdm_q_to_minimize         | -0.0868  |
+| hdm_weights               | -0.068   |
+| Inner_Test_AgChangeRatio  | 0.989    |
+| Inner_Train_AgChangeRatio | 0.984    |
+| log_hdm_gamma             | -0.693   |
+| Loss_hdm                  | 0.00562  |
+| Loss_her                  | 0.958    |
+| Loss_q                    | 0.964    |
+| offset                    | 49.8     |
+| opt_steps                 | 1.2e+05  |
+| q_bg                      | -16.7    |
+| q_o2_a2                   | -16.6    |
+| q_o2_eps_greedy           | -15.9    |
+| q_o2_max                  | -15.8    |
+| q_o2_soft                 | -16.2    |
+| q_o2_soft_kl              | -16.2    |
+| q_o2_targ                 | -16.6    |
+| q_targ                    | -16.7    |
+| replay_fill_ratio         | 0.22     |
+| replay_size               | 440      |
+| reward                    | -0.485   |
+| TestAgChangeRatio         | 1        |
+| TestBestSuccessRate       | 0.2      |
+| TestFinalDist             | 0.78     |
+| TestSuccessRate           | 0        |
+| Time                      | 1.48e+03 |
+| TimePerSeqRollout         | 4.47     |
+| TimePerTrainIter          | 0.00754  |
+| TotalTimeSteps            | 2.2e+05  |
+| TrainAgChangeRatio        | 1        |
+| TrainSuccess              | 0        |
+----------------------------------------
+Epoch 7 eval | final dist 0.321 | success rate 0.000 | best success 0.200
+ckpt_name: Jan-15-11-32-11
+Epoch 7: Iter (out of 40)= 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39
+----------------------------------------
+| env_steps                 | 2.4e+05  |
+| Epoch                     | 7        |
+| exp_avg_reward            | 0.616    |
+| exp_reward_avg            | 0.693    |
+| hdm_gamma                 | 0.5      |
+| hdm_gamma_auto            | 0.98     |
+| hdm_gamma_zero_point      | 1        |
+| hdm_q_o1                  | -19.1    |
+| hdm_q_o2                  | -19.3    |
+| hdm_q_to_minimize         | -0.0965  |
+| hdm_weights               | -0.0806  |
+| Inner_Test_AgChangeRatio  | 0.989    |
+| Inner_Train_AgChangeRatio | 0.986    |
+| log_hdm_gamma             | -0.693   |
+| Loss_hdm                  | 0.0161   |
+| Loss_her                  | 1.37     |
+| Loss_q                    | 1.38     |
+| offset                    | 49.9     |
+| opt_steps                 | 1.4e+05  |
+| q_bg                      | -19.1    |
+| q_o2_a2                   | -19      |
+| q_o2_eps_greedy           | -18.2    |
+| q_o2_max                  | -18.2    |
+| q_o2_soft                 | -18.5    |
+| q_o2_soft_kl              | -18.6    |
+| q_o2_targ                 | -19      |
+| q_targ                    | -19.1    |
+| replay_fill_ratio         | 0.24     |
+| replay_size               | 480      |
+| reward                    | -0.485   |
+| TestAgChangeRatio         | 1        |
+| TestBestSuccessRate       | 0.2      |
+| TestFinalDist             | 0.321    |
+| TestSuccessRate           | 0        |
+| Time                      | 1.69e+03 |
+| TimePerSeqRollout         | 4.49     |
+| TimePerTrainIter          | 0.00757  |
+| TotalTimeSteps            | 2.4e+05  |
+| TrainAgChangeRatio        | 1        |
+| TrainSuccess              | 0        |
+----------------------------------------
+Epoch 8 eval | final dist 0.535 | success rate 0.000 | best success 0.200
+ckpt_name: Jan-15-11-32-11
+Epoch 8: Iter (out of 40)= 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39
+----------------------------------------
+| env_steps                 | 2.6e+05  |
+| Epoch                     | 8        |
+| exp_avg_reward            | 0.616    |
+| exp_reward_avg            | 0.693    |
+| hdm_gamma                 | 0.5      |
+| hdm_gamma_auto            | 0.98     |
+| hdm_gamma_zero_point      | 1.05     |
+| hdm_q_o1                  | -21.1    |
+| hdm_q_o2                  | -21.5    |
+| hdm_q_to_minimize         | -0.126   |
+| hdm_weights               | -0.0855  |
+| Inner_Test_AgChangeRatio  | 0.988    |
+| Inner_Train_AgChangeRatio | 0.983    |
+| log_hdm_gamma             | -0.693   |
+| Loss_hdm                  | 0.021    |
+| Loss_her                  | 2.01     |
+| Loss_q                    | 2.04     |
+| offset                    | 49.9     |
+| opt_steps                 | 1.6e+05  |
+| q_bg                      | -21.1    |
+| q_o2_a2                   | -21      |
+| q_o2_eps_greedy           | -20.2    |
+| q_o2_max                  | -20.1    |
+| q_o2_soft                 | -20.5    |
+| q_o2_soft_kl              | -20.6    |
+| q_o2_targ                 | -21      |
+| q_targ                    | -21.1    |
+| replay_fill_ratio         | 0.26     |
+| replay_size               | 520      |
+| reward                    | -0.485   |
+| TestAgChangeRatio         | 1        |
+| TestBestSuccessRate       | 0.2      |
+| TestFinalDist             | 0.535    |
+| TestSuccessRate           | 0        |
+| Time                      | 1.91e+03 |
+| TimePerSeqRollout         | 4.5      |
+| TimePerTrainIter          | 0.00758  |
+| TotalTimeSteps            | 2.6e+05  |
+| TrainAgChangeRatio        | 1        |
+| TrainSuccess              | 0        |
+----------------------------------------
+Epoch 9 eval | final dist 0.550 | success rate 0.000 | best success 0.200
+ckpt_name: Jan-15-11-32-11
+Epoch 9: Iter (out of 40)= 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39
+----------------------------------------
+| env_steps                 | 2.8e+05  |
+| Epoch                     | 9        |
+| exp_avg_reward            | 0.616    |
+| exp_reward_avg            | 0.693    |
+| hdm_gamma                 | 0.5      |
+| hdm_gamma_auto            | 0.98     |
+| hdm_gamma_zero_point      | 1.14     |
+| hdm_q_o1                  | -23.6    |
+| hdm_q_o2                  | -24      |
+| hdm_q_to_minimize         | -0.208   |
+| hdm_weights               | -0.0945  |
+| Inner_Test_AgChangeRatio  | 0.987    |
+| Inner_Train_AgChangeRatio | 0.982    |
+| log_hdm_gamma             | -0.693   |
+| Loss_hdm                  | 0.0389   |
+| Loss_her                  | 2.98     |
+| Loss_q                    | 3.02     |
+| offset                    | 49.8     |
+| opt_steps                 | 1.8e+05  |
+| q_bg                      | -23.6    |
+| q_o2_a2                   | -23.5    |
+| q_o2_eps_greedy           | -22.4    |
+| q_o2_max                  | -22.4    |
+| q_o2_soft                 | -22.8    |
+| q_o2_soft_kl              | -22.9    |
+| q_o2_targ                 | -23.5    |
+| q_targ                    | -23.6    |
+| replay_fill_ratio         | 0.28     |
+| replay_size               | 560      |
+| reward                    | -0.485   |
+| TestAgChangeRatio         | 1        |
+| TestBestSuccessRate       | 0.2      |
+| TestFinalDist             | 0.55     |
+| TestSuccessRate           | 0        |
+| Time                      | 2.13e+03 |
+| TimePerSeqRollout         | 4.48     |
+| TimePerTrainIter          | 0.00756  |
+| TotalTimeSteps            | 2.8e+05  |
+| TrainAgChangeRatio        | 1        |
+| TrainSuccess              | 0        |
+----------------------------------------
+Epoch 10 eval | final dist 0.690 | success rate 0.000 | best success 0.200
+ckpt_name: Jan-15-11-32-11
+Epoch 10: Iter (out of 40)= 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39
+----------------------------------------
+| env_steps                 | 3e+05    |
+| Epoch                     | 10       |
+| exp_avg_reward            | 0.616    |
+| exp_reward_avg            | 0.693    |
+| hdm_gamma                 | 0.5      |
+| hdm_gamma_auto            | 0.98     |
+| hdm_gamma_zero_point      | 1.28     |
+| hdm_q_o1                  | -26.4    |
+| hdm_q_o2                  | -27      |
+| hdm_q_to_minimize         | -0.293   |
+| hdm_weights               | -0.1     |
+| Inner_Test_AgChangeRatio  | 0.989    |
+| Inner_Train_AgChangeRatio | 0.983    |
+| log_hdm_gamma             | -0.693   |
+| Loss_hdm                  | 0.0585   |
+| Loss_her                  | 4.09     |
+| Loss_q                    | 4.15     |
+| offset                    | 49.9     |
+| opt_steps                 | 2e+05    |
+| q_bg                      | -26.4    |
+| q_o2_a2                   | -26.4    |
+| q_o2_eps_greedy           | -25.1    |
+| q_o2_max                  | -25      |
+| q_o2_soft                 | -25.5    |
+| q_o2_soft_kl              | -25.6    |
+| q_o2_targ                 | -26.4    |
+| q_targ                    | -26.4    |
+| replay_fill_ratio         | 0.3      |
+| replay_size               | 600      |
+| reward                    | -0.486   |
+| TestAgChangeRatio         | 1        |
+| TestBestSuccessRate       | 0.2      |
+| TestFinalDist             | 0.69     |
+| TestSuccessRate           | 0        |
+| Time                      | 2.34e+03 |
+| TimePerSeqRollout         | 4.51     |
+| TimePerTrainIter          | 0.00762  |
+| TotalTimeSteps            | 3e+05    |
+| TrainAgChangeRatio        | 1        |
+| TrainSuccess              | 0        |
+----------------------------------------
+Epoch 11 eval | final dist 0.516 | success rate 0.000 | best success 0.200
+ckpt_name: Jan-15-11-32-11
+Epoch 11: Iter (out of 40)= 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39
+----------------------------------------
+| env_steps                 | 3.2e+05  |
+| Epoch                     | 11       |
+| exp_avg_reward            | 0.616    |
+| exp_reward_avg            | 0.693    |
+| hdm_gamma                 | 0.5      |
+| hdm_gamma_auto            | 0.98     |
+| hdm_gamma_zero_point      | 1.42     |
+| hdm_q_o1                  | -29.4    |
+| hdm_q_o2                  | -30.1    |
+| hdm_q_to_minimize         | -0.388   |
+| hdm_weights               | -0.109   |
+| Inner_Test_AgChangeRatio  | 0.985    |
+| Inner_Train_AgChangeRatio | 0.985    |
+| log_hdm_gamma             | -0.693   |
+| Loss_hdm                  | 0.0816   |
+| Loss_her                  | 5.42     |
+| Loss_q                    | 5.5      |
+| offset                    | 50       |
+| opt_steps                 | 2.2e+05  |
+| q_bg                      | -29.4    |
+| q_o2_a2                   | -29.5    |
+| q_o2_eps_greedy           | -28      |
+| q_o2_max                  | -27.9    |
+| q_o2_soft                 | -28.4    |
+| q_o2_soft_kl              | -28.6    |
+| q_o2_targ                 | -29.5    |
+| q_targ                    | -29.4    |
+| replay_fill_ratio         | 0.32     |
+| replay_size               | 640      |
+| reward                    | -0.486   |
+| TestAgChangeRatio         | 1        |
+| TestBestSuccessRate       | 0.2      |
+| TestFinalDist             | 0.516    |
+| TestSuccessRate           | 0        |
+| Time                      | 2.56e+03 |
+| TimePerSeqRollout         | 4.55     |
+| TimePerTrainIter          | 0.00768  |
+| TotalTimeSteps            | 3.2e+05  |
+| TrainAgChangeRatio        | 1        |
+| TrainSuccess              | 0        |
+----------------------------------------
+Epoch 12 eval | final dist 0.609 | success rate 0.000 | best success 0.200
+ckpt_name: Jan-15-11-32-11
+Epoch 12: Iter (out of 40)= 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39
+----------------------------------------
+| env_steps                 | 3.4e+05  |
+| Epoch                     | 12       |
+| exp_avg_reward            | 0.616    |
+| exp_reward_avg            | 0.693    |
+| hdm_gamma                 | 0.5      |
+| hdm_gamma_auto            | 0.98     |
+| hdm_gamma_zero_point      | 1.1      |
+| hdm_q_o1                  | -32.1    |
+| hdm_q_o2                  | -32.8    |
+| hdm_q_to_minimize         | -0.441   |
+| hdm_weights               | -0.117   |
+| Inner_Test_AgChangeRatio  | 0.987    |
+| Inner_Train_AgChangeRatio | 0.985    |
+| log_hdm_gamma             | -0.693   |
+| Loss_hdm                  | 0.0959   |
+| Loss_her                  | 6.41     |
+| Loss_q                    | 6.5      |
+| offset                    | 50       |
+| opt_steps                 | 2.4e+05  |
+| q_bg                      | -32.1    |
+| q_o2_a2                   | -32.2    |
+| q_o2_eps_greedy           | -30.6    |
+| q_o2_max                  | -30.5    |
+| q_o2_soft                 | -31      |
+| q_o2_soft_kl              | -31.2    |
+| q_o2_targ                 | -32.2    |
+| q_targ                    | -32.1    |
+| replay_fill_ratio         | 0.34     |
+| replay_size               | 680      |
+| reward                    | -0.486   |
+| TestAgChangeRatio         | 1        |
+| TestBestSuccessRate       | 0.2      |
+| TestFinalDist             | 0.609    |
+| TestSuccessRate           | 0        |
+| Time                      | 2.78e+03 |
+| TimePerSeqRollout         | 4.55     |
+| TimePerTrainIter          | 0.00769  |
+| TotalTimeSteps            | 3.4e+05  |
+| TrainAgChangeRatio        | 1        |
+| TrainSuccess              | 0        |
+----------------------------------------
+Epoch 13 eval | final dist 0.554 | success rate 0.000 | best success 0.200
+ckpt_name: Jan-15-11-32-11
+Epoch 13: Iter (out of 40)= 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39
+----------------------------------------
+| env_steps                 | 3.6e+05  |
+| Epoch                     | 13       |
+| exp_avg_reward            | 0.616    |
+| exp_reward_avg            | 0.693    |
+| hdm_gamma                 | 0.5      |
+| hdm_gamma_auto            | 0.98     |
+| hdm_gamma_zero_point      | 1.11     |
+| hdm_q_o1                  | -34      |
+| hdm_q_o2                  | -34.7    |
+| hdm_q_to_minimize         | -0.432   |
+| hdm_weights               | -0.133   |
+| Inner_Test_AgChangeRatio  | 0.986    |
+| Inner_Train_AgChangeRatio | 0.981    |
+| log_hdm_gamma             | -0.693   |
+| Loss_hdm                  | 0.103    |
+| Loss_her                  | 6.81     |
+| Loss_q                    | 6.92     |
+| offset                    | 49.8     |
+| opt_steps                 | 2.6e+05  |
+| q_bg                      | -34      |
+| q_o2_a2                   | -34.2    |
+| q_o2_eps_greedy           | -32.6    |
+| q_o2_max                  | -32.5    |
+| q_o2_soft                 | -33      |
+| q_o2_soft_kl              | -33.2    |
+| q_o2_targ                 | -34.2    |
+| q_targ                    | -34      |
+| replay_fill_ratio         | 0.36     |
+| replay_size               | 720      |
+| reward                    | -0.485   |
+| TestAgChangeRatio         | 1        |
+| TestBestSuccessRate       | 0.2      |
+| TestFinalDist             | 0.554    |
+| TestSuccessRate           | 0        |
+| Time                      | 3e+03    |
+| TimePerSeqRollout         | 4.5      |
+| TimePerTrainIter          | 0.00761  |
+| TotalTimeSteps            | 3.6e+05  |
+| TrainAgChangeRatio        | 1        |
+| TrainSuccess              | 0        |
+----------------------------------------
+Epoch 14 eval | final dist 0.536 | success rate 0.000 | best success 0.200
+ckpt_name: Jan-15-11-32-11
+Epoch 14: Iter (out of 40)= 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39
+----------------------------------------
+| env_steps                 | 3.8e+05  |
+| Epoch                     | 14       |
+| exp_avg_reward            | 0.616    |
+| exp_reward_avg            | 0.693    |
+| hdm_gamma                 | 0.5      |
+| hdm_gamma_auto            | 0.98     |
+| hdm_gamma_zero_point      | 1.15     |
+| hdm_q_o1                  | -34.7    |
+| hdm_q_o2                  | -35.4    |
+| hdm_q_to_minimize         | -0.394   |
+| hdm_weights               | -0.146   |
+| Inner_Test_AgChangeRatio  | 0.988    |
+| Inner_Train_AgChangeRatio | 0.985    |
+| log_hdm_gamma             | -0.693   |
+| Loss_hdm                  | 0.101    |
+| Loss_her                  | 6.54     |
+| Loss_q                    | 6.64     |
+| offset                    | 49.9     |
+| opt_steps                 | 2.8e+05  |
+| q_bg                      | -34.7    |
+| q_o2_a2                   | -34.9    |
+| q_o2_eps_greedy           | -33.4    |
+| q_o2_max                  | -33.3    |
+| q_o2_soft                 | -33.8    |
+| q_o2_soft_kl              | -34.1    |
+| q_o2_targ                 | -34.9    |
+| q_targ                    | -34.7    |
+| replay_fill_ratio         | 0.38     |
+| replay_size               | 760      |
+| reward                    | -0.486   |
+| TestAgChangeRatio         | 1        |
+| TestBestSuccessRate       | 0.2      |
+| TestFinalDist             | 0.536    |
+| TestSuccessRate           | 0        |
+| Time                      | 3.22e+03 |
+| TimePerSeqRollout         | 4.54     |
+| TimePerTrainIter          | 0.00768  |
+| TotalTimeSteps            | 3.8e+05  |
+| TrainAgChangeRatio        | 1        |
+| TrainSuccess              | 0        |
+----------------------------------------
+Epoch 15 eval | final dist 0.567 | success rate 0.000 | best success 0.200
+ckpt_name: Jan-15-11-32-11
+Epoch 15: Iter (out of 40)= 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39
+----------------------------------------
+| env_steps                 | 4e+05    |
+| Epoch                     | 15       |
+| exp_avg_reward            | 0.616    |
+| exp_reward_avg            | 0.693    |
+| hdm_gamma                 | 0.5      |
+| hdm_gamma_auto            | 0.98     |
+| hdm_gamma_zero_point      | 0.894    |
+| hdm_q_o1                  | -34.6    |
+| hdm_q_o2                  | -35.1    |
+| hdm_q_to_minimize         | -0.321   |
+| hdm_weights               | -0.158   |
+| Inner_Test_AgChangeRatio  | 0.986    |
+| Inner_Train_AgChangeRatio | 0.987    |
+| log_hdm_gamma             | -0.693   |
+| Loss_hdm                  | 0.0907   |
+| Loss_her                  | 5.87     |
+| Loss_q                    | 5.96     |
+| offset                    | 50       |
+| opt_steps                 | 3e+05    |
+| q_bg                      | -34.6    |
+| q_o2_a2                   | -34.8    |
+| q_o2_eps_greedy           | -33.5    |
+| q_o2_max                  | -33.4    |
+| q_o2_soft                 | -33.9    |
+| q_o2_soft_kl              | -34.1    |
+| q_o2_targ                 | -34.8    |
+| q_targ                    | -34.6    |
+| replay_fill_ratio         | 0.4      |
+| replay_size               | 800      |
+| reward                    | -0.486   |
+| TestAgChangeRatio         | 1        |
+| TestBestSuccessRate       | 0.2      |
+| TestFinalDist             | 0.567    |
+| TestSuccessRate           | 0        |
+| Time                      | 3.44e+03 |
+| TimePerSeqRollout         | 4.53     |
+| TimePerTrainIter          | 0.00765  |
+| TotalTimeSteps            | 4e+05    |
+| TrainAgChangeRatio        | 1        |
+| TrainSuccess              | 0        |
+----------------------------------------
+
+==================================================
+Training stopped: reached max_epochs=15
+Final: epoch=15, env_steps=400000
+==================================================
+
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout00_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout01_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout02_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout03_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout04_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout05_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout06_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout07_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout08_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout09_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout10_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout11_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout12_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout13_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout14_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout15_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout16_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout17_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout18_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout19_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout20_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout21_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout22_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout23_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout24_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout25_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout26_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout27_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout28_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout29_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout30_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout31_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout32_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout33_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout34_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout35_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout36_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout37_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout38_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout39_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout40_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout41_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout42_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout43_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout44_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout45_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout46_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout47_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout48_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0001_rollout49_steps100000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout00_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout01_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout02_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout03_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout04_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout05_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout06_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout07_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout08_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout09_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout10_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout11_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout12_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout13_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout14_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout15_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout16_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout17_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout18_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout19_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout20_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout21_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout22_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout23_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout24_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout25_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout26_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout27_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout28_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout29_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout30_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout31_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout32_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout33_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout34_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout35_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout36_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout37_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout38_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout39_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout40_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout41_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout42_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout43_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout44_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout45_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout46_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout47_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout48_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0002_rollout49_steps120000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout00_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout01_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout02_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout03_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout04_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout05_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout06_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout07_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout08_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout09_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout10_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout11_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout12_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout13_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout14_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout15_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout16_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout17_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout18_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout19_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout20_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout21_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout22_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout23_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout24_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout25_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout26_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout27_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout28_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout29_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout30_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout31_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout32_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout33_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout34_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout35_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout36_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout37_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout38_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout39_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout40_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout41_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout42_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout43_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout44_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout45_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout46_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout47_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout48_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0003_rollout49_steps140000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout00_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout01_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout02_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout03_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout04_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout05_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout06_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout07_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout08_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout09_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout10_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout11_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout12_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout13_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout14_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout15_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout16_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout17_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout18_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout19_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout20_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout21_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout22_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout23_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout24_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout25_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout26_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout27_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout28_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout29_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout30_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout31_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout32_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout33_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout34_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout35_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout36_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout37_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout38_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout39_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout40_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout41_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout42_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout43_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout44_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout45_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout46_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout47_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout48_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0004_rollout49_steps160000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout00_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout01_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout02_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout03_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout04_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout05_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout06_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout07_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout08_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout09_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout10_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout11_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout12_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout13_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout14_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout15_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout16_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout17_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout18_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout19_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout20_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout21_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout22_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout23_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout24_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout25_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout26_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout27_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout28_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout29_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout30_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout31_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout32_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout33_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout34_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout35_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout36_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout37_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout38_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout39_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout40_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout41_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout42_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout43_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout44_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout45_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout46_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout47_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout48_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0005_rollout49_steps180000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout00_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout01_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout02_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout03_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout04_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout05_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout06_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout07_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout08_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout09_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout10_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout11_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout12_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout13_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout14_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout15_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout16_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout17_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout18_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout19_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout20_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout21_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout22_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout23_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout24_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout25_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout26_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout27_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout28_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout29_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout30_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout31_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout32_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout33_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout34_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout35_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout36_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout37_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout38_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout39_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout40_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout41_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout42_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout43_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout44_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout45_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout46_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout47_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout48_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0006_rollout49_steps200000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout00_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout01_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout02_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout03_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout04_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout05_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout06_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout07_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout08_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout09_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout10_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout11_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout12_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout13_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout14_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout15_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout16_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout17_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout18_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout19_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout20_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout21_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout22_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout23_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout24_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout25_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout26_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout27_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout28_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout29_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout30_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout31_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout32_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout33_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout34_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout35_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout36_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout37_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout38_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout39_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout40_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout41_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout42_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout43_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout44_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout45_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout46_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout47_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout48_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0007_rollout49_steps220000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout00_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout01_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout02_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout03_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout04_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout05_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout06_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout07_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout08_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout09_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout10_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout11_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout12_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout13_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout14_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout15_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout16_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout17_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout18_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout19_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout20_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout21_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout22_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout23_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout24_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout25_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout26_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout27_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout28_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout29_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout30_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout31_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout32_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout33_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout34_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout35_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout36_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout37_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout38_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout39_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout40_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout41_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout42_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout43_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout44_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout45_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout46_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout47_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout48_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0008_rollout49_steps240000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout00_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout01_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout02_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout03_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout04_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout05_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout06_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout07_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout08_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout09_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout10_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout11_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout12_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout13_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout14_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout15_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout16_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout17_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout18_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout19_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout20_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout21_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout22_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout23_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout24_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout25_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout26_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout27_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout28_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout29_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout30_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout31_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout32_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout33_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout34_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout35_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout36_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout37_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout38_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout39_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout40_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout41_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout42_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout43_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout44_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout45_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout46_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout47_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout48_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0009_rollout49_steps260000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout00_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout01_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout02_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout03_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout04_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout05_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout06_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout07_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout08_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout09_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout10_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout11_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout12_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout13_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout14_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout15_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout16_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout17_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout18_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout19_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout20_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout21_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout22_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout23_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout24_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout25_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout26_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout27_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout28_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout29_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout30_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout31_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout32_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout33_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout34_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout35_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout36_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout37_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout38_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout39_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout40_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout41_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout42_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout43_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout44_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout45_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout46_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout47_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout48_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0010_rollout49_steps280000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout00_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout01_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout02_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout03_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout04_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout05_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout06_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout07_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout08_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout09_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout10_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout11_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout12_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout13_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout14_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout15_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout16_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout17_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout18_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout19_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout20_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout21_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout22_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout23_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout24_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout25_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout26_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout27_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout28_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout29_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout30_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout31_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout32_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout33_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout34_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout35_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout36_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout37_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout38_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout39_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout40_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout41_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout42_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout43_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout44_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout45_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout46_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout47_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout48_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0011_rollout49_steps300000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout00_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout01_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout02_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout03_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout04_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout05_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout06_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout07_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout08_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout09_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout10_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout11_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout12_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout13_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout14_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout15_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout16_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout17_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout18_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout19_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout20_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout21_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout22_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout23_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout24_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout25_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout26_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout27_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout28_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout29_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout30_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout31_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout32_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout33_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout34_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout35_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout36_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout37_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout38_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout39_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout40_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout41_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout42_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout43_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout44_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout45_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout46_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout47_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout48_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0012_rollout49_steps320000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout00_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout01_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout02_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout03_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout04_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout05_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout06_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout07_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout08_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout09_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout10_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout11_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout12_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout13_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout14_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout15_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout16_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout17_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout18_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout19_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout20_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout21_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout22_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout23_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout24_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout25_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout26_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout27_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout28_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout29_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout30_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout31_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout32_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout33_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout34_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout35_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout36_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout37_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout38_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout39_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout40_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout41_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout42_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout43_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout44_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout45_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout46_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout47_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout48_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0013_rollout49_steps340000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout00_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout01_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout02_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout03_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout04_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout05_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout06_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout07_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout08_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout09_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout10_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout11_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout12_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout13_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout14_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout15_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout16_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout17_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout18_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout19_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout20_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout21_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout22_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout23_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout24_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout25_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout26_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout27_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout28_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout29_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout30_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout31_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout32_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout33_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout34_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout35_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout36_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout37_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout38_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout39_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout40_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout41_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout42_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout43_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout44_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout45_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout46_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout47_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout48_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0014_rollout49_steps360000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout00_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout01_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout02_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout03_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout04_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout05_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout06_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout07_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout08_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout09_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout10_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout11_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout12_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout13_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout14_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout15_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout16_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout17_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout18_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout19_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout20_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout21_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout22_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout23_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout24_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout25_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout26_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout27_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout28_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout29_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout30_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout31_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout32_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout33_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout34_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout35_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout36_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout37_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout38_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout39_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout40_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout41_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout42_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout43_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout44_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout45_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout46_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout47_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout48_steps380000_alpha1.csv
+Saved trajectory log: experiments/metaworld_push/Jan-15-11-32-11/trajectory_logs/eval_epoch0015_rollout49_steps380000_alpha1.csv
+
+Total trajectory logs saved: 750
+============================================
+Job completed at: Thu Jan 15 12:29:49 CST 2026
+============================================
