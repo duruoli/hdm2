@@ -84,7 +84,7 @@ class BaseAlgo:
             # Log ALL rollouts in eval (changed from first only)
             log_this_rollout = log_this_eval
             traj_data = [] if log_this_rollout else None
-            has_alpha_one = False  # Track if alpha=1 occurs in this rollout
+            has_alpha_zero = False  # Track if alpha=0 occurs in this rollout
             
             for timestep in range(self.env_params['max_trajectory_length']):
                 act = self.get_actions(ob, bg, greedy=True, random_act_prob=0.0)
@@ -97,10 +97,10 @@ class BaseAlgo:
                     
                     gripper_to_obj_dist = float(np.linalg.norm(gripper_pos - object_pos))
                     reach_threshold = 0.05  # Same as in metaworld_wrapper.py
-                    alpha = 1.0 if gripper_to_obj_dist > reach_threshold else 0.0
+                    alpha = 0.0 if gripper_to_obj_dist < reach_threshold else 1.0
                     
-                    if alpha == 1.0:
-                        has_alpha_one = True
+                    if alpha == 0.0:
+                        has_alpha_zero = True
                     
                     traj_data.append({
                         'timestep': timestep,
@@ -127,7 +127,7 @@ class BaseAlgo:
                     'eval_num': self.eval_count,
                     'rollout_num': n_test,
                     'env_steps': self.env_steps,
-                    'has_alpha_one': has_alpha_one,
+                    'has_alpha_zero': has_alpha_zero,
                     'data': df
                 })
             
@@ -329,7 +329,7 @@ class Algo(BaseAlgo):
                     filename = f"train_{log_entry['collect_num']:04d}_steps{log_entry['env_steps']}.csv"
                 else:
                     # Eval filename with rollout number and alpha marker
-                    alpha_marker = "_alpha1" if log_entry.get('has_alpha_one', False) else ""
+                    alpha_marker = "_alpha0" if log_entry.get('has_alpha_zero', False) else ""
                     filename = f"eval_epoch{log_entry['eval_num']:04d}_rollout{log_entry['rollout_num']:02d}_steps{log_entry['env_steps']}{alpha_marker}.csv"
                 filepath = osp.join(log_dir, filename)
                 log_entry['data'].to_csv(filepath, index=False)
