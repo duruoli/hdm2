@@ -81,7 +81,9 @@ python -m hdm \
     --n_test_rollouts 50 \
     --batch_size 256 \
     --buffer_size 1000000 \
-    --seed 890
+    --seed 890 \
+    --max_epochs 15 \
+    --debug_log_trajectories 
 
 echo "============================================"
 echo "Job completed at: $(date)"

@@ -81,9 +81,10 @@ class BaseAlgo:
             bg = env.extract_goal(goal_state)
             ag_changed = None
             
-            # Only log first rollout in this eval
-            log_this_rollout = log_this_eval and (n_test == 0)
+            # Log ALL rollouts in eval (changed from first only)
+            log_this_rollout = log_this_eval
             traj_data = [] if log_this_rollout else None
+            has_alpha_one = False  # Track if alpha=1 occurs in this rollout
             
             for timestep in range(self.env_params['max_trajectory_length']):
                 act = self.get_actions(ob, bg, greedy=True, random_act_prob=0.0)
@@ -94,14 +95,22 @@ class BaseAlgo:
                     object_pos = ob[4:7] if ob.ndim == 1 else ob[0, 4:7]
                     goal_object_pos = bg[3:6] if bg.ndim == 1 else bg[0, 3:6]
                     
+                    gripper_to_obj_dist = float(np.linalg.norm(gripper_pos - object_pos))
+                    reach_threshold = 0.05  # Same as in metaworld_wrapper.py
+                    alpha = 1.0 if gripper_to_obj_dist > reach_threshold else 0.0
+                    
+                    if alpha == 1.0:
+                        has_alpha_one = True
+                    
                     traj_data.append({
                         'timestep': timestep,
                         'gripper_pos': tuple(gripper_pos.tolist()),
                         'object_pos': tuple(object_pos.tolist()),
                         'goal_obj_pos': tuple(goal_object_pos.tolist()),
                         'action': int(act) if act.ndim == 0 else int(act[0]),
-                        'gripper_to_obj_dist': float(np.linalg.norm(gripper_pos - object_pos)),
+                        'gripper_to_obj_dist': gripper_to_obj_dist,
                         'obj_to_goal_dist': float(np.linalg.norm(object_pos - goal_object_pos)),
+                        'alpha': alpha,
                     })
                 
                 state, _, _, _ = env.step(act)
@@ -116,7 +125,9 @@ class BaseAlgo:
                 self.trajectory_logs.append({
                     'type': 'eval',
                     'eval_num': self.eval_count,
+                    'rollout_num': n_test,
                     'env_steps': self.env_steps,
+                    'has_alpha_one': has_alpha_one,
                     'data': df
                 })
             
@@ -231,32 +242,32 @@ class Algo(BaseAlgo):
         ag_changed = None
         self.agent.eval()
         
-        # Track if this is the first trajectory in this collect period
-        self.collect_count += 1
-        log_this_traj = self.debug_log_trajectories and (self.collect_count == 1 or 
-                        (self.collect_count - 1) % self.args.num_rollouts_per_mpi == 0)
+        # # Track if this is the first trajectory in this collect period
+        # self.collect_count += 1
+        # log_this_traj = self.debug_log_trajectories and (self.collect_count == 1 or 
+        #                 (self.collect_count - 1) % self.args.num_rollouts_per_mpi == 0)
         
-        traj_data = [] if log_this_traj else None
+        # traj_data = [] if log_this_traj else None
         
         for timestep in range(self.env_params['max_trajectory_length']):
             act = self.get_actions(ob, bg, greedy=greedy, random_act_prob=random_act_prob)
             
-            # Log trajectory data for debugging
-            if log_this_traj:
-                # Extract gripper and object positions from observation
-                gripper_pos = ob[0:3] if ob.ndim == 1 else ob[0, 0:3]
-                object_pos = ob[4:7] if ob.ndim == 1 else ob[0, 4:7]
-                goal_object_pos = bg[3:6] if bg.ndim == 1 else bg[0, 3:6]  # Goal object pos from achieved_goal
+            # # Log trajectory data for debugging
+            # if log_this_traj:
+            #     # Extract gripper and object positions from observation
+            #     gripper_pos = ob[0:3] if ob.ndim == 1 else ob[0, 0:3]
+            #     object_pos = ob[4:7] if ob.ndim == 1 else ob[0, 4:7]
+            #     goal_object_pos = bg[3:6] if bg.ndim == 1 else bg[0, 3:6]  # Goal object pos from achieved_goal
                 
-                traj_data.append({
-                    'timestep': timestep,
-                    'gripper_pos': tuple(gripper_pos.tolist()),
-                    'object_pos': tuple(object_pos.tolist()),
-                    'goal_obj_pos': tuple(goal_object_pos.tolist()),
-                    'action': int(act) if act.ndim == 0 else int(act[0]),
-                    'gripper_to_obj_dist': float(np.linalg.norm(gripper_pos - object_pos)),
-                    'obj_to_goal_dist': float(np.linalg.norm(object_pos - goal_object_pos)),
-                })
+            #     traj_data.append({
+            #         'timestep': timestep,
+            #         'gripper_pos': tuple(gripper_pos.tolist()),
+            #         'object_pos': tuple(object_pos.tolist()),
+            #         'goal_obj_pos': tuple(goal_object_pos.tolist()),
+            #         'action': int(act) if act.ndim == 0 else int(act[0]),
+            #         'gripper_to_obj_dist': float(np.linalg.norm(gripper_pos - object_pos)),
+            #         'obj_to_goal_dist': float(np.linalg.norm(object_pos - goal_object_pos)),
+            #     })
             
             state_list.append(state.copy())
             bg_state_list.append(goal_state.copy())
@@ -273,16 +284,16 @@ class Algo(BaseAlgo):
                     and train_agent:
                     self.agent_optimize()
         
-        # Save trajectory log
-        if log_this_traj and traj_data:
-            import pandas as pd
-            df = pd.DataFrame(traj_data)
-            self.trajectory_logs.append({
-                'type': 'train',
-                'collect_num': self.collect_count,
-                'env_steps': self.env_steps,
-                'data': df
-            })
+        # # Save trajectory log
+        # if log_this_traj and traj_data:
+        #     import pandas as pd
+        #     df = pd.DataFrame(traj_data)
+        #     self.trajectory_logs.append({
+        #         'type': 'train',
+        #         'collect_num': self.collect_count,
+        #         'env_steps': self.env_steps,
+        #         'data': df
+        #     })
         
         state_list.append(state.copy())
         act = self.get_actions(ob, bg, greedy=greedy, random_act_prob=random_act_prob)
@@ -317,7 +328,9 @@ class Algo(BaseAlgo):
                 if log_entry['type'] == 'train':
                     filename = f"train_{log_entry['collect_num']:04d}_steps{log_entry['env_steps']}.csv"
                 else:
-                    filename = f"eval_{log_entry['eval_num']:04d}_steps{log_entry['env_steps']}.csv"
+                    # Eval filename with rollout number and alpha marker
+                    alpha_marker = "_alpha1" if log_entry.get('has_alpha_one', False) else ""
+                    filename = f"eval_epoch{log_entry['eval_num']:04d}_rollout{log_entry['rollout_num']:02d}_steps{log_entry['env_steps']}{alpha_marker}.csv"
                 filepath = osp.join(log_dir, filename)
                 log_entry['data'].to_csv(filepath, index=False)
                 print(f"Saved trajectory log: {filepath}")
@@ -329,7 +342,8 @@ class Algo(BaseAlgo):
             self.collect_experience(greedy=False, random_act_prob=1.0, train_agent=False) #interact with env and store trajectories in replay buffer; trigger learning (agent_optimize())
         
         epoch = 0
-        while self.env_steps < self.env_params['max_timesteps']: #max_timesteps is total env steps across all epochs; will continue the loop until reaching max_timesteps
+        max_epochs = self.args.max_epochs if self.args.max_epochs is not None else float('inf')
+        while self.env_steps < self.env_params['max_timesteps'] and epoch < max_epochs: #Stop when either max_timesteps or max_epochs is reached
             epoch += 1
             
             success_rate, final_dist = self.run_eval() #evaluate at the start of each epoch (test previous updated policy)
@@ -372,6 +386,19 @@ class Algo(BaseAlgo):
             self.log_everything()
             
             self.save_all(self.model_path)
+        
+        # Print why training stopped
+        if mpi_utils.is_root():
+            if epoch >= max_epochs:
+                print(f'\n{"="*50}')
+                print(f'Training stopped: reached max_epochs={int(max_epochs)}')
+                print(f'Final: epoch={epoch}, env_steps={self.env_steps}')
+                print(f'{"="*50}\n')
+            else:
+                print(f'\n{"="*50}')
+                print(f'Training stopped: reached max_timesteps={self.env_params["max_timesteps"]}')
+                print(f'Final: epoch={epoch}, env_steps={self.env_steps}')
+                print(f'{"="*50}\n')
         
         # Save trajectory logs at the end of training
         self.save_trajectory_logs()

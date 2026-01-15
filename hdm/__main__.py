@@ -91,6 +91,11 @@ def launch(args):
          'goal_dim': env.goal_space.shape[0],
          'independent_policy': args.independent_policy}
     )
+    
+    # Override max_timesteps if provided
+    if args.max_timesteps is not None:
+        env_params['max_timesteps'] = args.max_timesteps
+    
     env, agent = get_env_and_agent(env, env_params)
     
     rank = mpi_utils.get_rank()
@@ -159,6 +164,9 @@ def get_args():
     
     parser.add_argument('--n_initial_rollouts', type=int, default=200)
     parser.add_argument('--n_test_rollouts', type=int, default=50)
+    
+    parser.add_argument('--max_epochs', type=int, default=None, help='Maximum number of epochs (None = no limit)')
+    parser.add_argument('--max_timesteps', type=int, default=None, help='Maximum timesteps (None = use env default)')
     
     parser.add_argument('--gamma', type=float, default=0.98)
     parser.add_argument('--polyak', type=float, default=0.995)
